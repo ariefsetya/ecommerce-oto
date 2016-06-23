@@ -2640,7 +2640,7 @@ div#myTabContent {
 }
 #container .list li {
     background: #F9F9F9;
-    margin-bottom: 30px;
+    margin-bottom: 7px;
     padding: 20px;
     list-style-type: none;
 	    transition:0.5s all;

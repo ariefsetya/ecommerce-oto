@@ -62,6 +62,11 @@ class CreateAppconfigsTable extends Migration {
 		$x->value = 'BursaOto';
 		$x->save();
 		$x = new \App\Appconfig;
+		$x->key = 'img_banner';
+		$x->type = 'page-home';
+		$x->value = 'assets/images/advanced_manufacturing.jpg';
+		$x->save();
+		$x = new \App\Appconfig;
 		$x->key = 'foot_subheading';
 		$x->type = 'page-home';
 		$x->value = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

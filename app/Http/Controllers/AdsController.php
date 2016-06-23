@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
-class HomeController extends Controller {
+use Auth;
+class AdsController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -23,18 +24,20 @@ class HomeController extends Controller {
 		$this->middleware('auth');
 	}
 
-	/**
-	 * Show the application dashboard to the user.
-	 *
-	 * @return Response
-	 */
-	public function index()
+	public function ads_published()
 	{
-		return view('home');
+		$data['bret'] = "Ads";
+		$data['name'] = "Published Ads";
+		$data['brer'] = "ads";
+		$data['data'] = \App\Product::where('id_user',Auth::user()->id)->get();
+		return view('ads/lists')->with($data);
 	}
-	public function account()
+	public function ads_create()
 	{
-		return view('account/lists');
+		$data['bret'] = "Ads";
+		$data['name'] = "Create New Ad";
+		$data['brer'] = "ads";
+		return view('ads/create')->with($data);
 	}
 
 }

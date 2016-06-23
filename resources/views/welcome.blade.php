@@ -2,7 +2,7 @@
 
 @section('body')
 
-  <div class="main-banner banner text-center" style="background: url(http://www.boostbusinesslancashire.co.uk/media/7225/advanced_manufacturing.jpg) no-repeat;background-size: cover;background-position: center;">
+  <div class="main-banner banner text-center" style="background: url({{url(\App\Appconfig::where('key','img_banner')->first()['value'])}}) no-repeat;background-size: cover;background-position: center;">
     <div class="container">    
       <h1>{{\App\Appconfig::where('key','heading')->first()['value']}}</h1>
       <p>{{\App\Appconfig::where('key','subheading')->first()['value']}}</p>
@@ -38,7 +38,7 @@
                 <li>
                   <div class="col-md-3 biseller-column">
                     <a href="single.html">
-                      <img src="{{url('assets/images/p1.jpg')}}"/>
+                      <img src="{{url('assets/images/bk10.jpg')}}"/>
                       <span class="price">Rp. 100.000.000,00</span>
                     </a> 
                     <div class="ad-info">
@@ -48,7 +48,7 @@
                   </div>
                   <div class="col-md-3 biseller-column">
                     <a href="single.html">
-                      <img src="{{url('assets/images/p2.jpg')}}"/>
+                      <img src="{{url('assets/images/c4.jpg')}}"/>
                       <span class="price">&#36; 399</span>
                     </a> 
                     <div class="ad-info">
@@ -58,7 +58,7 @@
                   </div>
                   <div class="col-md-3 biseller-column">
                     <a href="single.html">
-                      <img src="{{url('assets/images/p3.jpg')}}"/>
+                      <img src="{{url('assets/images/bk3.jpg')}}"/>
                       <span class="price">&#36; 199</span>
                     </a> 
                     <div class="ad-info">
@@ -68,7 +68,7 @@
                   </div>
                   <div class="col-md-3 biseller-column">
                     <a href="single.html">
-                      <img src="{{url('assets/images/p4.jpg')}}"/>
+                      <img src="{{url('assets/images/c8.jpg')}}"/>
                       <span class="price">&#36; 159</span>
                     </a> 
                     <div class="ad-info">
@@ -81,7 +81,7 @@
                 <li>
                   <div class="col-md-3 biseller-column">
                     <a href="single.html">
-                      <img src="{{url('assets/images/p1.jpg')}}"/>
+                      <img src="{{url('assets/images/bk5.jpg')}}"/>
                       <span class="price">Rp. 100.000,00</span>
                     </a> 
                     <div class="ad-info">
@@ -91,7 +91,7 @@
                   </div>
                   <div class="col-md-3 biseller-column">
                     <a href="single.html">
-                      <img src="{{url('assets/images/p2.jpg')}}"/>
+                      <img src="{{url('assets/images/c2.jpg')}}"/>
                       <span class="price">&#36; 399</span>
                     </a> 
                     <div class="ad-info">
@@ -101,7 +101,7 @@
                   </div>
                   <div class="col-md-3 biseller-column">
                     <a href="single.html">
-                      <img src="{{url('assets/images/p3.jpg')}}"/>
+                      <img src="{{url('assets/images/c6.jpg')}}"/>
                       <span class="price">&#36; 199</span>
                     </a> 
                     <div class="ad-info">
@@ -111,7 +111,7 @@
                   </div>
                   <div class="col-md-3 biseller-column">
                     <a href="single.html">
-                      <img src="{{url('assets/images/p4.jpg')}}"/>
+                      <img src="{{url('assets/images/bk7.jpg')}}"/>
                       <span class="price">&#36; 159</span>
                     </a> 
                     <div class="ad-info">
@@ -162,7 +162,7 @@
           <div class="col-md-7 app-right">
             <h3>{{\App\Appconfig::where('key','foot_heading')->first()['value']}}</h3>
             <p>{{\App\Appconfig::where('key','foot_subheading')->first()['value']}}</p>
-            <div class="app-buttons">
+            <!--div class="app-buttons">
 	              <div class="app-button">
                 <a href="#"><img src="{{url('assets/images/1.png')}}" alt=""></a>
               </div>
@@ -170,7 +170,7 @@
                 <a href="#"><img src="{{url('assets/images/2.png')}}" alt=""></a>
               </div>
               <div class="clearfix"> </div>
-            </div>
+            </div-->
           </div>
           <div class="clearfix"></div>
         </div>
