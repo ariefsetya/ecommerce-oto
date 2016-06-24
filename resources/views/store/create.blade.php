@@ -22,34 +22,38 @@
 				<div class="">
 						<div class="">
 							<div class="post-ad-form">
-								<form action="{{route('ads_save')}}" method="POST">
+								@if($setup==0)
+								<form action="{{route('store_save')}}" method="POST">
+								@elseif($setup==1)
+								<form action="{{route('setup_store_save')}}" method="POST">
+								@endif
 								<input type="hidden" value="{{csrf_token()}}" name="_token"></input>
 								
 								@for($i=0;$i<$num_foto;$i++)
 								<input type="hidden" value="" name="image_name[]" id="image_name_{{$i}}"></input>
 								@endfor
-									<label>Store <span>*</span></label>
-									<select class="" required="" name="id_kios">
-									  <option value="">--Select Store--</option>
-									  @foreach(\App\Kios::all() as $key)
-									  	<option value="{{$key->id}}">{{$key->name}}</option>
-									  @endforeach
+									<div class="clearfix"></div>
+									<label>Store Name <span>*</span></label>
+									<input name="title" type="text" required class="phone" placeholder="">
+									<div class="clearfix"></div>
+									<label>Description <span>*</span></label>
+									<textarea data-autoresize required name="description" rows=5 class="" placeholder="Write few lines about your store"></textarea>
+									<hr>
+									<label>Province <span>*</span></label>
+									<select onchange="sel_city()" required class="phone" name="id_province" id="id_province">
+										<option value="">--Select Province--</option>
+										@foreach(\App\Province::all() as $key)
+										<option value="{{$key->id}}">{{$key->nama}}</option>
+										@endforeach
 									</select>
 									<div class="clearfix"></div>
-									<label>Category <span>*</span></label>
-									<select class="" required="" name="category">
-									  <option value="">--Select Category--</option>
-									  @foreach(\App\Pilar::all() as $key)
-									  	<option value="{{$key->id}}">{{$key->name}}</option>
-									  @endforeach
-									</select>
+									<label>City <span>*</span></label>
+									<select class="" required name="id_city" id="id_city">
+										<option value="">--Select Province First--</option>
+									</select>									
 									<div class="clearfix"></div>
-									<label>Ad Title <span>*</span></label>
-									<input name="title" type="text" class="phone" placeholder="">
-									<div class="clearfix"></div>
-									<label>Ad Description <span>*</span></label>
-									<textarea data-autoresize name="description" class="mess" placeholder="Write few lines about your product"></textarea>
-									<div class="clearfix"></div>
+									<label>Address <span>*</span></label>
+									<textarea data-autoresize name="address" rows=5 class="" required placeholder="Your store address"></textarea>
 								<div class="upload-ad-photos">
 								<label>Photos :</label>
 									@for($i=0;$i<$num_foto;$i++)
@@ -76,6 +80,23 @@
 
 	<script src="{{url('img-uploader/src/jquery.picture.cut.js')}}"></script>
 	<script type='text/javascript'>
+	function sel_city() {
+		var prov = $("#id_province").val();
+		$.ajax({
+			url:'{{route("get_city_province_id")}}',
+			type:'POST',
+			data:{id_province:prov,_token:"{{csrf_token()}}"},
+			dataType:'json',
+			success:function(data) {
+				var html = '';
+					html +='<option value="">--Select City--</option>';
+				for(key in data){
+					html +='<option value="'+data[key].id+'">'+data[key].type+' '+data[key].nama+'</option>';
+				}
+				$("#id_city").html(html);
+			}
+		});
+	}
 	function remove_img(id) {
 		$("#lefted_"+id).html('');
 		$("#lefted_"+id).html('<div id="container_image_'+id+'"></div><a style="display:none" id="del_img_'+id+'" onclick="remove_img('+id+')"><i class="fa fa-times"></i> Remove</a>');

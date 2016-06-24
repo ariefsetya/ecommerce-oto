@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use Auth;
 class HomeController extends Controller {
 
 	/*
@@ -13,28 +14,19 @@ class HomeController extends Controller {
 	|
 	*/
 
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
 	public function __construct()
 	{
 		$this->middleware('auth');
 	}
 
-	/**
-	 * Show the application dashboard to the user.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		return view('home');
-	}
 	public function account()
 	{
-		return view('account/lists');
+		$data['name'] = "Account";
+		$data['num_store'] = sizeof(\App\Kios::where('id_user',Auth::user()->id)->get());
+		$data['num_product'] = sizeof(\App\Product::where('id_user',Auth::user()->id)->get());
+		$data['data'] = \App\Kios::where('id_user',Auth::user()->id)->get();
+		
+		return view('account/home')->with($data);
 	}
 
 }

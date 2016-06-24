@@ -12,41 +12,43 @@
 		<div class="container">
 			<ol class="breadcrumb" style="margin-bottom: 5px;margin-top: 20px;">
 			  <li><a href="{{url()}}">Home</a></li>
-			  <li><a href="{{route($brer)}}">{{$bret}}</a></li>
 			  <li class="active">{{$name}}</li>
 			</ol>
 			<div class="ads-grid">
 			@include('utils.sidebar-seller')
 				<div class="ads-display col-md-9">
-				<h3>{{$name}}</h3>
-					<div class="wrapper">					
-						<div id="container">
-							<div class="clearfix"></div>
-							<ul class="list">
-							@if(sizeof($data)==0)
-								<h2>Sorry, but no one published ad</h2>
-								<h3><a href="{{route('ads_create')}}">Create one here</a></h3>
-							@endif
-							@foreach($data as $key)
-								<a href="single.html">
-									<li>
-									<img src="{{url('assets/images/bk11.jpg')}}" title="" alt="" />
-									<section class="list-left">
-									<h5 class="title">Engine</h5>
-									<span class="adprice">$290</span>
-									<p class="catpath">Cars » Other Vehicles</p>
-									</section>
-									<section class="list-right">
-									<span class="date">Today, 17:55</span>
-									<span class="cityname">City name</span>
-									</section>
-									<div class="clearfix"></div>
-									</li> 
-								</a>
-							@endforeach
-							</ul>
-					  </div>
-				</div>
+				<h3>Summary</h3>
+					<div class="row">
+						@if($num_store==0)
+						<a href="{{route('setup_store')}}">
+						<div class="grid_o col-md-10">
+							<div class="grid_">
+								<i class="fa fa-cog"></i> Setup Your Store First, click here
+							</div>
+						</div>
+						</a>
+						@else
+						@if($num_product==0)
+						<a href="{{route('ads_create')}}">
+						<div class="grid_o col-md-10">
+							<div class="grid_">
+								<i class="fa fa-plus"></i> Post your ad
+							</div>
+						</div>
+						</a>
+						@endif
+						<div class="grid_o col-md-5">
+							<div class="grid_">
+							<i class="fa fa-shopping-cart"></i> {{$num_store==0?"No":$num_store}} store{{$num_store>1?"s":""}}
+							</div>
+						</div>
+						<div class="grid_o col-md-5">
+							<div class="grid_">
+							<i class="fa fa-tags"></i> {{$num_product==0?"No":$num_product}} ad{{$num_product>1?"s":""}}
+							</div>
+						</div>
+						@endif
+					</div>
 				</div>
 				<div class="clearfix"></div>
 			</div>

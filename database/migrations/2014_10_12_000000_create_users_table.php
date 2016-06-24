@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration {
 			$table->string('type');
 			$table->integer('id_province');
 			$table->integer('id_city');
+			$table->integer('id_store');
+			$table->string('role');
 			$table->text('address');
 			$table->integer('photo');
 			$table->integer('banner');

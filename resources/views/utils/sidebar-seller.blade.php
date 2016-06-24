@@ -9,12 +9,18 @@
 				<li><a href="{{route('ads_declined')}}">Declined Ads</a></li>
 			</ol>
 		</li>
-		<li><a href="{{route('promotion')}}">My Promotion</a>
+		<li><a href="{{route('promotion')}}">My Promotions</a>
 			<ol>
-				<li><a href="{{route('promotion_create')}}">Create Promotion</a></li>
+				<li><a href="{{route('promotion_create')}}">Create New Promotion</a></li>
 				<li><a href="{{route('promotion_published')}}">Published Promotion</a></li>
 				<li><a href="{{route('promotion_requested')}}">Requested Promotion</a></li>
 				<li><a href="{{route('promotion_declined')}}">Declined Promotion</a></li>
+			</ol>
+		</li>
+		<li><a href="{{route('store')}}">My Stores</a>
+			<ol>
+				<li><a href="{{route('store_create')}}">Create New Store</a></li>
+				<li><a href="{{route('store_published')}}">Published Store</a></li>
 			</ol>
 		</li>
 	</ol>

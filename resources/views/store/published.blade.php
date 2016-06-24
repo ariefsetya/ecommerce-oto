@@ -11,67 +11,38 @@
 <div class="total-ads main-grid-border">
 		<div class="container">
 			<ol class="breadcrumb" style="margin-bottom: 5px;margin-top: 20px;">
-			  <li><a href="index.html">Home</a></li>
-			  <li class="active">Account</li>
+			  <li><a href="{{url()}}">Home</a></li>
+			  <li class="active">{{$name}}</li>
 			</ol>
 			<div class="ads-grid">
-				<div class="rectangle-list col-md-3">
-					<h3>Navigation</h3>
-					<ol>
-						<li><a href="{{route('ads_create')}}"></i> Create New Ad</a></li>
-						<li><a href="{{route('ads_published')}}">My Ads</a>
-							<ol>
-								<li><a href="{{route('ads_published')}}">Published Ads</a></li>
-								<li><a href="{{route('ads_moderation')}}">In Moderation Ads</a></li>
-								<li><a href="{{route('ads_declined')}}">Declined Ads</a></li>
-							</ol>
-						</li>
-						<li><a href="{{route('promotion_published')}}">My Promotion</a>
-							<ol>
-								<li><a href="{{route('promotion_create')}}">Create Promotion</a></li>
-								<li><a href="{{route('promotion_published')}}">Published Promotion</a></li>
-								<li><a href="{{route('promotion_requested')}}">Requested Promotion</a></li>
-								<li><a href="{{route('promotion_declined')}}">Declined Promotion</a></li>
-							</ol>
-						</li>
-					</ol>
-				</div>
+			@include('utils.sidebar-seller')
 				<div class="ads-display col-md-9">
-				<h3>Published Ads</h3>
+				<h3>{{$name}}</h3>
 					<div class="wrapper">					
 							<div id="container">
 								<div class="clearfix"></div>
 									<ul class="list">
+									@foreach($data as $key)
 										<a href="single.html">
 											<li>
-											<img src="{{url('assets/images/bk11.jpg')}}" title="" alt="" />
+											@if($key->photo==0)
+											<img src="{{url('img-uploader/src/img/icon_add_image2.png')}}" title="" alt="" />
+											@else
+											<img src="{{\App\Image::find($key->photo)['image_type']=='url'?url('uploads/'.\App\Image::find($key->photo)['image']):""}}" title="" alt="" />
+											@endif
 											<section class="list-left">
-											<h5 class="title">Engine</h5>
-											<span class="adprice">$290</span>
-											<p class="catpath">Cars » Other Vehicles</p>
+											<h5 class="title">{{$key->name}}</h5>
+											<span class="" style="width:50%">{{$key->description}}</span>
+											<p class="catpath"></p>
 											</section>
 											<section class="list-right">
-											<span class="date">Today, 17:55</span>
-											<span class="cityname">City name</span>
+											<span class="date">{{$key->created_at}}</span>
+											<span class="cityname">{{\App\City::find($key->id_city)['nama'].", ".\App\Province::find($key->id_province)['nama']}}</span>
 											</section>
 											<div class="clearfix"></div>
 											</li> 
 										</a>
-										<a href="single.html">
-											<li>
-											<img src="{{url('assets/images/c1.jpg')}}" title="" alt="" />
-											<section class="list-left">
-											<h5 class="title">Engine</h5>
-											<span class="adprice">$290</span>
-											<p class="catpath">Cars » Other Vehicles</p>
-											</section>
-											<section class="list-right">
-											<span class="date">Today, 17:55</span>
-											<span class="cityname">City name</span>
-											</section>
-											<div class="clearfix"></div>
-											</li> 
-										</a>
+									@endforeach
 									</ul>
 						
 						

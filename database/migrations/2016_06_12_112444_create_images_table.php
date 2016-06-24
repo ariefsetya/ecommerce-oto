@@ -25,14 +25,6 @@ class CreateImagesTable extends Migration {
 			$table->timestamps();
 		});
 
-		$x = new \App\Image;
-		$x->image_type = 'fa-icon';
-		$x->image = 'fa-wrench';
-		$x->used_for = 'pilar';
-		$x->name = 'Services';
-		$x->code = 'faicon_services_pilar';
-		$x->description = 'Image for Services';
-		$x->save();
 
 		$x = new \App\Image;
 		$x->image_type = 'fa-icon';
@@ -54,11 +46,20 @@ class CreateImagesTable extends Migration {
 
 		$x = new \App\Image;
 		$x->image_type = 'fa-icon';
-		$x->image = 'fa-truck';
+		$x->image = 'fa-wrench';
 		$x->used_for = 'pilar';
-		$x->name = 'Trucks';
-		$x->code = 'faicon_trucks_pilar';
-		$x->description = 'Image for Trucks';
+		$x->name = 'Services';
+		$x->code = 'faicon_services_pilar';
+		$x->description = 'Image for Services';
+		$x->save();
+
+		$x = new \App\Image;
+		$x->image_type = 'fa-icon';
+		$x->image = 'fa-sliders';
+		$x->used_for = 'pilar';
+		$x->name = 'Accessories';
+		$x->code = 'faicon_accessories_pilar';
+		$x->description = 'Image for Accessories';
 		$x->save();
 	}
 

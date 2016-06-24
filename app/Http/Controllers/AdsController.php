@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Auth;
+use Illuminate\Support\Facades\Input;
 class AdsController extends Controller {
 
 	/*
@@ -33,11 +34,20 @@ class AdsController extends Controller {
 		return view('ads/lists')->with($data);
 	}
 	public function ads_create()
-	{
+	{	
+		$data['num_foto'] = 4;
 		$data['bret'] = "Ads";
 		$data['name'] = "Create New Ad";
 		$data['brer'] = "ads";
 		return view('ads/create')->with($data);
+	}
+	public function ads_save()
+	{
+		dd(Input::all());
+		$ad = new \App\Product;
+		$ad->name = Input::get('title');
+		$ad->description = Input::get('description');
+		$ad->description = Input::get('description');
 	}
 
 }

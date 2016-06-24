@@ -1,3 +1,12 @@
+.list-left{
+    width: auto !important;
+}
+.list-right{
+    width: auto !important;
+}
+.post-ad-form textarea{
+    height: auto;
+}
 ol {
     counter-reset: li; /* Initiate a counter */
     list-style: none; /* Remove default numbering */
@@ -64,9 +73,33 @@ ol ol {
 #SelectProporcao,.col-xs-2{
 	display: none !important;
 }
-.container_image.picture-element-principal{
+.lefted{
 	float: left !important;
-	margin-left: 10px !important;
+}
+.picture-element-principal{
 	width: 120px !important;
 	height: 120px !important;
+	margin-right: 10px !important;
+}
+a{
+	cursor: pointer !important;
+	text-decoration: none !important;
+}
+.grid_o{
+    background: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    padding: 10px !important;
+}
+.grid_{
+    height: 100px;
+    position: relative;
+    line-height: 100px;
+    background-color: #ddd;
+    text-align: center;
+    font-size: 20pt;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+.grid_:hover{
+    background-color: #eee;
 }

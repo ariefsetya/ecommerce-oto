@@ -31,7 +31,7 @@ class GuestController extends Controller {
 	{
 		return view('product.lists');
 	}
-	public function trucks()
+	public function accessories()
 	{
 		return view('product.lists');
 	}
