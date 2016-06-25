@@ -37,18 +37,48 @@
 									</select>
 									<div class="clearfix"></div>
 									<label>Category <span>*</span></label>
-									<select class="" required="" name="category">
+									<select class="" required="" onchange="change_category()" name="category" id="category">
 									  <option value="">--Select Category--</option>
 									  @foreach(\App\Pilar::all() as $key)
+									  	@if($key->id==3 or $key->id==4)
+									  	<option value="{{$key->id}}-1">{{$key->name}} for {{\App\Pilar::find(1)['name']}}</option>
+									  	<option value="{{$key->id}}-2">{{$key->name}} for {{\App\Pilar::find(2)['name']}}</option>
+									  	@else
 									  	<option value="{{$key->id}}">{{$key->name}}</option>
+									  	@endif
 									  @endforeach
 									</select>
+									<div id="make_div" style="display: none;">
+									<div class="clearfix"></div>
+									<label>Make <span>*</span></label>
+									<select class="" onchange="change_make()" required name="make" id="make">
+									  <option value="">--Select Make--</option>
+									</select>
+									</div>
+									<div id="new_make_div" style="display: none;">
+									<div class="clearfix"></div>
+									<label>Make Name <span>*</span></label>
+									<input name="new_make" id="new_make" required type="text" class="" placeholder="">
+									</div>
+									<div id="model_div" style="display: none;">
+									<div class="clearfix"></div>
+									<label>Model <span>*</span></label>
+									<select onchange="change_model()" class="" required name="model" id="model">
+									  <option value="">--Select Model--</option>
+									  <option value="add_new">Request New Model</option>
+									</select>
+									</div>
+									<div id="new_model_div" style="display: none;">
+									<div class="clearfix"></div>
+									<label>Model Name <span>*</span></label>
+									<input name="new_model" id="new_model" type="text" required class="" placeholder="">
+									</div>
 									<div class="clearfix"></div>
 									<label>Ad Title <span>*</span></label>
-									<input name="title" type="text" class="phone" placeholder="">
+									<input name="title" type="text" required class="phone" placeholder="">
 									<div class="clearfix"></div>
 									<label>Ad Description <span>*</span></label>
-									<textarea data-autoresize name="description" class="mess" placeholder="Write few lines about your product"></textarea>
+									<textarea data-autoresize name="description" required class="mess" placeholder="Write few lines about your product"></textarea>
 									<div class="clearfix"></div>
 								<div class="upload-ad-photos">
 								<label>Photos :</label>
@@ -75,7 +105,116 @@
 @section('footer')
 
 	<script src="{{url('img-uploader/src/jquery.picture.cut.js')}}"></script>
-	<script type='text/javascript'>
+	<script type="text/javascript">
+	var data_kirim = 0;
+	var accs = 0;
+	function change_category() {
+		$("#make").css('background-color','#ccc');
+		$("#make").attr('disabled',true);
+		var isi = $("#category").val();
+		var option = '';
+		if(isi.split('-').length==1){
+			data_kirim = isi;
+			accs = 0;
+		}else{
+			var isi2 = isi.split('-')[1];
+			data_kirim = isi2;
+			accs = 1;
+		}
+		get_make(function(data) {
+			$("#model").val('');
+			$("#model").css('background-color','#ccc');
+			$("#model").attr('disabled',true);
+			$("#make").attr('disabled',false);
+			$("#make").css('background-color','white');
+			$("#make").html(data);
+			$("#make_div").fadeIn();
+		});
+	}
+	function change_make() {
+		$("#model").css('background-color','#ccc');
+		$("#model").attr('disabled',true);
+		var isi = $("#make").val();
+		var option = '';
+		if(isi.split('-').length==1){
+			data_kirim = isi;
+		}else{
+			var isi2 = isi.split('-')[1];
+			data_kirim = isi2;
+		}
+		if(data_kirim!="add_new"){
+			$("#new_make_div").fadeOut();
+			get_model(function(data) {
+				$("#model").attr('disabled',false);
+				$("#model").css('background-color','white');
+				$("#model").html(data);
+				if(isi==0){
+					$("#model").val('0');
+					$("#model").css('background-color','#ccc');
+					$("#model").attr('disabled',true);
+				}
+				$("#model_div").fadeIn();
+				change_model();
+			});
+		}else{
+			$("#model_div").fadeIn();
+			$("#model").attr('disabled',false);
+			$("#model").css('background-color','white');
+			$("#model").val('add_new');
+			$("#new_make_div").fadeIn();
+			$("#new_model_div").fadeIn();
+			change_model();
+		}
+	}
+	function change_model() {
+		var isi = $("#model").val();
+		var option = '';
+		if(isi!="add_new"){
+			$("#new_model_div").fadeOut();
+		}else{
+			$("#new_model_div").fadeIn();
+		}
+	}
+	function get_make(id) {
+	var html = '';
+		$.ajax({
+			url:"{{route('get_make_id')}}",
+			data:{_token:"{{csrf_token()}}",id_induk:data_kirim},
+			dataType:'json',
+			type:'POST',
+			success:function(data) {
+				html +='<option value="">--Select Make--</option>';
+				if(accs==1){
+					html +='<option value="0">Any Make</option>';
+				}
+				for(key in data){
+					html +='<option value="'+data[key].id+'">'+data[key].name+'</option>';
+				}
+				html +='<option value="add_new">Request New Make</option>';
+				id(html);
+			}
+		});
+	}
+	function get_model(id) {
+	var html = '';
+		$.ajax({
+			url:"{{route('get_model_id')}}",
+			data:{_token:"{{csrf_token()}}",id_induk:data_kirim},
+			dataType:'json',
+			type:'POST',
+			success:function(data) {
+				html +='<option value="">--Select Model--</option>';
+				if(accs==1){
+					html +='<option value="0">Any Model</option>';
+				}
+				for(key in data){
+					html +='<option value="'+data[key].id+'">'+data[key].name+'</option>';
+				}
+				html +='<option value="add_new">Request New Model</option>';
+				id(html);
+			}
+		});
+	}
 	function remove_img(id) {
 		$("#lefted_"+id).html('');
 		$("#lefted_"+id).html('<div id="container_image_'+id+'"></div><a style="display:none" id="del_img_'+id+'" onclick="remove_img('+id+')"><i class="fa fa-times"></i> Remove</a>');

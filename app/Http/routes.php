@@ -24,6 +24,8 @@ Route::get('get_ongkir', 'GuestController@get_ongkir');
 
 //master ajaxes
 Route::post('ajax/get_city_province_id',['as'=>'get_city_province_id','uses'=>'AjaxController@get_city_province_id']);
+Route::post('ajax/get_make_id',['as'=>'get_make_id','uses'=>'AjaxController@get_make_id']);
+Route::post('ajax/get_model_id',['as'=>'get_model_id','uses'=>'AjaxController@get_model_id']);
 
 Route::get('home', 'WelcomeController@index');
 //pilars
