@@ -5,7 +5,7 @@
     <div class="container">    
       <h1>{{\App\Appconfig::where('key','heading')->first()['value']}}</h1>
       <p>{{\App\Appconfig::where('key','subheading')->first()['value']}}</p>
-      <a href="{{\App\Appconfig::where('key','btn_heading_url')->first()['value']}}">{{\App\Appconfig::where('key','btn_heading')->first()['value']}}</a>
+      <a href="{{route(\App\Appconfig::where('key','btn_heading_url')->first()['value'])}}">{{\App\Appconfig::where('key','btn_heading')->first()['value']}}</a>
     </div>
   </div>
 <div class="total-ads main-grid-border">
@@ -30,15 +30,16 @@
 							@foreach($data as $key)
 								<a href="single.html">
 									<li>
-									<img src="{{url('assets/images/bk11.jpg')}}" title="" alt="" />
+									<img src="{{url('uploads/'.\App\Image::where('code','product-'.$key->id)->first()['image'])}}" title="" alt="" />
 									<section class="list-left">
-									<h5 class="title">Engine</h5>
-									<span class="adprice">$290</span>
-									<p class="catpath">Cars » Other Vehicles</p>
+									<h5 class="title">{{$key->name}}</h5>
+									<span class="adprice">{{$key->price_range}}</span>
+									<p class="catpath">{{\App\Pilar::find($key->id_pilar)['name']}} » {{\App\Kategori::find(\App\ProductCategory::where('id_product',$key->id)->where('id_kategori',\App\JKategori::where('code','make')->first()['id'])->first()['value'])['name']}}</p>
 									</section>
 									<section class="list-right">
-									<span class="date">Today, 17:55</span>
-									<span class="cityname">City name</span>
+									<span class="date">{{date_format(date_create($key->created_at),"D, d M Y H:i:s")}}</span>
+									<span class="cityname">{{\App\Province::find(\App\Kios::find($key->id_kios)['id_province'])['nama']}}, {{\App\City::find(\App\Kios::find($key->id_kios)['id_city'])['nama']}}</span>
+									<span class="cityname">{{\App\Kios::find($key->id_kios)['name']}}</span>
 									</section>
 									<div class="clearfix"></div>
 									</li> 

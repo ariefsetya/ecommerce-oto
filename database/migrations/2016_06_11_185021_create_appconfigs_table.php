@@ -32,6 +32,11 @@ class CreateAppconfigsTable extends Migration {
 		$x->value = 'Sign In';
 		$x->save();
 		$x = new \App\Appconfig;
+		$x->key = 'btn_heading_url';
+		$x->type = 'page-home';
+		$x->value = 'ads_create';
+		$x->save();
+		$x = new \App\Appconfig;
 		$x->key = 'btn_signup';
 		$x->type = 'page-home';
 		$x->value = 'Sign Up';

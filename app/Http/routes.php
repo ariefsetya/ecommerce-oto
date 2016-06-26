@@ -45,6 +45,7 @@ Route::post('ads/save', ['as'=>'ads_save','uses'=>'AdsController@ads_save']);
 Route::get('ads/published', ['as'=>'ads_published','uses'=>'AdsController@ads_published']);
 Route::get('ads/moderation', ['as'=>'ads_moderation','uses'=>'AdsController@ads_moderation']);
 Route::get('ads/declined', ['as'=>'ads_declined','uses'=>'AdsController@ads_declined']);
+Route::get('ads/{ads_id}', ['as'=>'ads_detail','uses'=>'AdsController@ads_detail']);
 
 //promotions
 Route::get('promotion', ['as'=>'promotion','uses'=>'AdsController@promotion']);
