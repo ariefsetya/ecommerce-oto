@@ -110,6 +110,16 @@
 									  @endforeach
 									</select>
 									</div>
+									<div id="condition_div" style="display: none;">
+									<div class="clearfix"></div>
+									<label>Condition <span>*</span></label>
+									<select class="" required name="condition" id="condition">
+									  <option value="">--Select Condition--</option>
+									  @foreach(\App\Kategori::where('id_jenis',\App\JKategori::where('code','condition')->first()['id'])->get() as $key)
+									  <option value="{{$key->id}}">{{$key->name}}</option>
+									  @endforeach
+									</select>
+									</div>
 									<div class="upload-ad-photos">
 									<label>Photos :</label>
 										@for($i=0;$i<$num_foto;$i++)
@@ -150,12 +160,18 @@
 			accs = 0;
 			$("#exterior_color_div").fadeIn();
 			$("#engine_size_div").fadeIn();
+			$("#condition_div").fadeIn();
 		}else{
 			var isi2 = isi.split('-')[1];
 			data_kirim = isi2;
 			accs = 1;
 			$("#exterior_color_div").fadeOut();
 			$("#engine_size_div").fadeOut();
+			if(isi.split('-')[0]==4){
+				$("#condition_div").fadeIn();
+			}else{
+				$("#condition_div").fadeOut();
+			}
 		}
 		get_make(function(data) {
 			$("#model").val('');

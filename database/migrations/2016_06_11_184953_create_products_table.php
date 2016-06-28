@@ -19,12 +19,13 @@ class CreateProductsTable extends Migration {
 			$table->integer('id_pilar');
 			$table->integer('id_user');
 			$table->string('name');
+			$table->string('slug');
 			$table->string('description');
 			$table->string('pilar_addon');
 			$table->integer('stok');
 			$table->integer('status');
 			$table->integer('promo');
-			$table->integer('price_range');
+			$table->decimal('price',65,2);
 			$table->timestamps();
 		});
 	}

@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use Auth;
 use \App\Http\Controllers\APIController\API as API;
 class GuestController extends Controller {
 
@@ -19,6 +20,26 @@ class GuestController extends Controller {
 	 *
 	 * @return Response
 	 */
+
+	public function store_detail($id)
+	{
+		$data['show'] = 1;
+		$data['id_u'] = \App\Kios::find($id)['id_user'];
+		$data['bret'] = "Store";
+		$data['name'] = \App\Kios::find($id)['name'];
+		$data['brer'] = "store";
+		$data['data'] = \App\Product::where('id_user',$data['id_u'])->where('id_kios',$id)->where('status',0)->paginate(10);
+		return view('ads/lists')->with($data);
+	}
+	public function ad_detail($id)
+	{
+		$data['deta'] = \App\Product::where('slug',$id)->first();
+		$data['name'] = $data['deta']->name;
+		$data['bret'] = \App\Kios::find(\App\Product::find($data['deta']->id)['id_kios'])['name'];
+		$data['brer'] = "store_detail";
+		$data['kios'] = \App\Kios::find($data['deta']->id_kios);
+		return view('ads.ad')->with($data);
+	}
 	public function services()
 	{
 		return view('product.lists');

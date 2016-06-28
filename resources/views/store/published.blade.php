@@ -19,47 +19,36 @@
 				<div class="ads-display col-md-9">
 				<h3>{{$name}}</h3>
 					<div class="wrapper">					
-							<div id="container">
-								<div class="clearfix"></div>
-									<ul class="list">
-									@foreach($data as $key)
-										<a href="single.html">
-											<li>
-											@if($key->photo==0)
-											<img src="{{url('img-uploader/src/img/icon_add_image2.png')}}" title="" alt="" />
-											@else
-											<img src="{{\App\Image::find($key->photo)['image_type']=='url'?url('uploads/'.\App\Image::find($key->photo)['image']):""}}" title="" alt="" />
-											@endif
-											<section class="list-left">
-											<h5 class="title">{{$key->name}}</h5>
-											<span class="" style="width:50%">{{$key->description}}</span>
-											<p class="catpath"></p>
-											</section>
-											<section class="list-right">
-											<span class="date">{{$key->created_at}}</span>
-											<span class="cityname">{{\App\City::find($key->id_city)['nama'].", ".\App\Province::find($key->id_province)['nama']}}</span>
-											</section>
-											<div class="clearfix"></div>
-											</li> 
-										</a>
-									@endforeach
-									</ul>
-						
-						
-						<ul class="pagination pagination-sm">
-							<li><a href="#">Prev</a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">6</a></li>
-							<li><a href="#">7</a></li>
-							<li><a href="#">8</a></li>
-							<li><a href="#">Next</a></li>
-						</ul>
-					  </div>
-				</div>
+						<div id="container">
+							<div class="clearfix"></div>
+							<ul class="list">
+							@foreach($data as $key)
+								<a href="{{route('store_detail',$key->id)}}">
+									<li>
+									<div class="photo">
+									@if($key->photo==0)
+									<img src="{{url('img-uploader/src/img/icon_add_image2.png')}}" title="" alt="" />
+									@else
+									<img src="{{\App\Image::find($key->photo)['image_type']=='url'?url('uploads/'.\App\Image::find($key->photo)['image']):""}}" title="" alt="" />
+									@endif
+									</div>
+									<div class="dalam">
+									<section class="list-left">
+									<h5 class="title">{{$key->name}}</h5>
+									<span class="cityname">{{$key->description}}</span>
+									</section>
+									<section class="list-right">
+									<span class="date">{{$key->created_at}}</span>
+									<span class="cityname">{{\App\City::find($key->id_city)['nama'].", ".\App\Province::find($key->id_province)['nama']}}</span>
+									</section>
+									</div>
+									<div class="clearfix"></div>
+									</li> 
+								</a>
+							@endforeach
+							</ul>
+					  	</div>
+					</div>
 				</div>
 				<div class="clearfix"></div>
 			</div>

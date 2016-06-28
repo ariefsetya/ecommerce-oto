@@ -36,11 +36,27 @@ class CreateKategorisTable extends Migration {
 		} 
 		$x = new \App\Kategori;
 		$x->id_induk = 0;
+		$x->id_jenis = \App\JKategori::where('code','condition')->first()['id'];
+		$x->name = 'New';
+		$x->image = 0;
+		$x->status = 'active';
+		$x->description = 'Category Condition New';
+		$x->save();
+		$x = new \App\Kategori;
+		$x->id_induk = 0;
+		$x->id_jenis = \App\JKategori::where('code','condition')->first()['id'];
+		$x->name = 'Second';
+		$x->image = 0;
+		$x->status = 'active';
+		$x->description = 'Category Condition Second';
+		$x->save();
+		$x = new \App\Kategori;
+		$x->id_induk = 0;
 		$x->id_jenis = \App\JKategori::where('code','vehicle_mileage')->first()['id'];
 		$x->name = 1000;
 		$x->image = 0;
 		$x->status = 'active';
-		$x->description = 'Category vehicle Mileage 1000';
+		$x->description = 'Category Vehicle Mileage 1000';
 		$x->save();
 		$x = new \App\Kategori;
 		$x->id_induk = 0;
@@ -48,7 +64,7 @@ class CreateKategorisTable extends Migration {
 		$x->name = 5000;
 		$x->image = 0;
 		$x->status = 'active';
-		$x->description = 'Category vehicle Mileage 5000';
+		$x->description = 'Category Vehicle Mileage 5000';
 		$x->save();
 		$x = new \App\Kategori;
 		$x->id_induk = 0;
@@ -56,7 +72,7 @@ class CreateKategorisTable extends Migration {
 		$x->name = 15000;
 		$x->image = 0;
 		$x->status = 'active';
-		$x->description = 'Category vehicle Mileage 15000';
+		$x->description = 'Category Vehicle Mileage 15000';
 		$x->save();
 		$x = new \App\Kategori;
 		$x->id_induk = 0;
@@ -64,7 +80,7 @@ class CreateKategorisTable extends Migration {
 		$x->name = 35000;
 		$x->image = 0;
 		$x->status = 'active';
-		$x->description = 'Category vehicle Mileage 35000';
+		$x->description = 'Category Vehicle Mileage 35000';
 		$x->save();
 		$x = new \App\Kategori;
 		$x->id_induk = 0;
@@ -72,7 +88,7 @@ class CreateKategorisTable extends Migration {
 		$x->name = 50000;
 		$x->image = 0;
 		$x->status = 'active';
-		$x->description = 'Category vehicle Mileage 50000';
+		$x->description = 'Category Vehicle Mileage 50000';
 		$x->save();
 		$x = new \App\Kategori;
 		$x->id_induk = 0;
@@ -80,7 +96,7 @@ class CreateKategorisTable extends Migration {
 		$x->name = 75000;
 		$x->image = 0;
 		$x->status = 'active';
-		$x->description = 'Category vehicle Mileage 75000';
+		$x->description = 'Category Vehicle Mileage 75000';
 		$x->save();
 		$x = new \App\Kategori;
 		$x->id_induk = 0;
@@ -88,7 +104,7 @@ class CreateKategorisTable extends Migration {
 		$x->name = 100000;
 		$x->image = 0;
 		$x->status = 'active';
-		$x->description = 'Category vehicle Mileage 100000';
+		$x->description = 'Category Vehicle Mileage 100000';
 		$x->save();
 		$x = new \App\Kategori;
 		$x->id_induk = 0;
@@ -96,7 +112,7 @@ class CreateKategorisTable extends Migration {
 		$x->name = 150000;
 		$x->image = 0;
 		$x->status = 'active';
-		$x->description = 'Category vehicle Mileage 150000';
+		$x->description = 'Category Vehicle Mileage 150000';
 		$x->save();
 		$x = new \App\Kategori;
 		$x->id_induk = 0;

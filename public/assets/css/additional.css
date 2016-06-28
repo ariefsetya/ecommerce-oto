@@ -1,11 +1,32 @@
+.flexslider .slides img{
+    width: 100%;
+}
+.item-price:before{
+    content: none;
+}
+.item-price,.interested,.tips{
+    margin-left: 0% !important;
+}
+#container .list div.photo img{
+    width: 100%;
+}
+#container .list div.photo{
+    width: 20%;
+    display: inline-block;
+}
+#container .list div.dalam{
+    width: 75%;
+    display: inline-block;
+    vertical-align: top;
+}
 input:read-only{
     background-color: #eee;
 }
 .list-left{
-    width: auto !important;
+    width: 100% !important;
 }
 .list-right{
-    width: auto !important;
+    width: 100% !important;
 }
 .post-ad-form textarea{
     height: auto;

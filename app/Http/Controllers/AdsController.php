@@ -27,6 +27,8 @@ class AdsController extends Controller {
 
 	public function ads_published()
 	{
+		$data['show'] = 1;
+		$data['id_u'] = Auth::user()->id;
 		$data['bret'] = "Ads";
 		$data['name'] = "Published Ads";
 		$data['brer'] = "ads";
@@ -35,14 +37,29 @@ class AdsController extends Controller {
 	}
 	public function ads_moderation()
 	{
+		$data['show'] = 1;
+		$data['id_u'] = Auth::user()->id;
 		$data['bret'] = "Ads";
 		$data['name'] = "Moderation Ads";
 		$data['brer'] = "ads";
 		$data['data'] = \App\Product::where('id_user',Auth::user()->id)->where('status',0)->paginate(10);
 		return view('ads/lists')->with($data);
 	}
+	public function ads_declined()
+	{
+		$data['show'] = 0;
+		$data['id_u'] = Auth::user()->id;
+		$data['bret'] = "Ads";
+		$data['name'] = "Declined Ads";
+		$data['brer'] = "ads";
+		$data['data'] = \App\Product::where('id_user',Auth::user()->id)->where('status',2)->paginate(10);
+		return view('ads/lists')->with($data);
+	}
 	public function ads_create()
 	{	
+		if(sizeof(\App\Kios::where('id_user',Auth::user()->id)->get())==0){
+			return redirect(route('setup_store'));
+		}
 		$data['num_foto'] = 4;
 		$data['bret'] = "Ads";
 		$data['name'] = "Create New Ad";
@@ -58,6 +75,7 @@ class AdsController extends Controller {
 		$ad->id_pilar = Input::get('category');
 		$ad->id_kios = Input::get('id_kios');
 		$ad->id_user = Auth::user()->id;
+		$ad->slug = str_slug(Input::get('title'))."-".Auth::user()->id."-".uniqid();
 		$ad->save();
 
 		$pcma = new \App\ProductCategory;
@@ -123,10 +141,6 @@ class AdsController extends Controller {
 		}
 
 		return redirect(route('ads_moderation'));
-	}
-	public function ads_detail($ads_id)
-	{
-		
 	}
 
 }

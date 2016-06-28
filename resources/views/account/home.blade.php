@@ -1,13 +1,13 @@
 @extends('app')
 
 @section('body')
-<div class="main-banner banner text-center" style="background: url({{url(\App\Appconfig::where('key','img_banner')->first()['value'])}}) no-repeat;background-size: cover;background-position: center;">
+<!-- <div class="main-banner banner text-center" style="background: url({{url(\App\Appconfig::where('key','img_banner')->first()['value'])}}) no-repeat;background-size: cover;background-position: center;">
     <div class="container">    
       <h1>{{\App\Appconfig::where('key','heading')->first()['value']}}</h1>
       <p>{{\App\Appconfig::where('key','subheading')->first()['value']}}</p>
       <a href="{{route(\App\Appconfig::where('key','btn_heading_url')->first()['value'])}}">{{\App\Appconfig::where('key','btn_heading')->first()['value']}}</a>
     </div>
-  </div>
+  </div> -->
 <div class="total-ads main-grid-border">
 		<div class="container">
 			<ol class="breadcrumb" style="margin-bottom: 5px;margin-top: 20px;">

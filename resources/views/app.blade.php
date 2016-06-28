@@ -82,6 +82,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <a href="{{url('auth/register')}}" class="btn account">{{\App\Appconfig::where('key','btn_signup')->first()['value']}}</a>
       @else
         <a href="{{route('account')}}" class="account btn">Welcome back, {{Auth::user()->name}}. Goto My Account</a>
+        <a href="{{url('auth/logout')}}" class="account btn">Sign Out</a>
       @endif
       </div>
     </div>

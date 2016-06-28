@@ -33,6 +33,7 @@ Route::get('services', ['as'=>'services_pilar','uses'=>'GuestController@services
 Route::get('motorcycles', ['as'=>'motorcycles_pilar','uses'=>'GuestController@motorcycles']);
 Route::get('cars', ['as'=>'cars_pilar','uses'=>'GuestController@cars']);
 Route::get('accessories', ['as'=>'accessories_pilar','uses'=>'GuestController@accessories']);
+Route::get('store/detail/{id}', ['as'=>'store_detail','uses'=>'GuestController@store_detail']);
 
 //account
 Route::get('account/settings', ['as'=>'account_settings','uses'=>'HomeController@account_settings']);
@@ -45,7 +46,6 @@ Route::post('ads/save', ['as'=>'ads_save','uses'=>'AdsController@ads_save']);
 Route::get('ads/published', ['as'=>'ads_published','uses'=>'AdsController@ads_published']);
 Route::get('ads/moderation', ['as'=>'ads_moderation','uses'=>'AdsController@ads_moderation']);
 Route::get('ads/declined', ['as'=>'ads_declined','uses'=>'AdsController@ads_declined']);
-Route::get('ads/{ads_id}', ['as'=>'ads_detail','uses'=>'AdsController@ads_detail']);
 
 //promotions
 Route::get('promotion', ['as'=>'promotion','uses'=>'AdsController@promotion']);
@@ -61,3 +61,5 @@ Route::post('store/save', ['as'=>'store_save','uses'=>'StoreController@store_sav
 Route::get('store/published', ['as'=>'store_published','uses'=>'StoreController@store_published']);
 Route::get('setup/store', ['as'=>'setup_store','uses'=>'StoreController@setup_store']);
 Route::post('setup/store/save', ['as'=>'setup_store_save','uses'=>'StoreController@setup_store_save']);
+
+Route::get('{ads_id}', ['as'=>'ad_detail','uses'=>'GuestController@ad_detail']);
