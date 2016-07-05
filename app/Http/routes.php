@@ -30,6 +30,7 @@ Route::post('ajax/get_model_id',['as'=>'get_model_id','uses'=>'AjaxController@ge
 Route::get('home', 'WelcomeController@index');
 //pilars
 Route::get('services', ['as'=>'services_pilar','uses'=>'GuestController@services']);
+Route::get('categories', ['as'=>'pilars','uses'=>'GuestController@pilars']);
 Route::get('motorcycles', ['as'=>'motorcycles_pilar','uses'=>'GuestController@motorcycles']);
 Route::get('cars', ['as'=>'cars_pilar','uses'=>'GuestController@cars']);
 Route::get('accessories', ['as'=>'accessories_pilar','uses'=>'GuestController@accessories']);
@@ -42,7 +43,10 @@ Route::get('account', ['as'=>'account','uses'=>'HomeController@account']);
 //ads
 Route::get('ads', ['as'=>'ads','uses'=>'AdsController@ads_home']);
 Route::get('ads/create', ['as'=>'ads_create','uses'=>'AdsController@ads_create']);
+Route::get('ads/edit/{id?}', ['as'=>'ads_edit','uses'=>'AdsController@ads_edit']);
+Route::get('ads/delete/{id?}', ['as'=>'ads_delete','uses'=>'AdsController@ads_delete']);
 Route::post('ads/save', ['as'=>'ads_save','uses'=>'AdsController@ads_save']);
+Route::post('ads/update', ['as'=>'ads_update','uses'=>'AdsController@ads_update']);
 Route::get('ads/published', ['as'=>'ads_published','uses'=>'AdsController@ads_published']);
 Route::get('ads/moderation', ['as'=>'ads_moderation','uses'=>'AdsController@ads_moderation']);
 Route::get('ads/declined', ['as'=>'ads_declined','uses'=>'AdsController@ads_declined']);

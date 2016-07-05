@@ -37,7 +37,7 @@ class AdsController extends Controller {
 	}
 	public function ads_moderation()
 	{
-		$data['show'] = 1;
+		$data['show'] = 0;
 		$data['id_u'] = Auth::user()->id;
 		$data['bret'] = "Ads";
 		$data['name'] = "Moderation Ads";
@@ -66,13 +66,30 @@ class AdsController extends Controller {
 		$data['brer'] = "ads";
 		return view('ads/create')->with($data);
 	}
+	public function ads_edit($id)
+	{	
+		if(sizeof(\App\Kios::where('id_user',Auth::user()->id)->get())==0){
+			return redirect(route('setup_store'));
+		}
+		if(\App\Product::find($id)['id_user']!=Auth::user()->id){
+			return redirect(route('ads'));
+		}
+		$data['num_foto'] = 4;
+		$data['bret'] = "Ads";
+		$data['name'] = "Edit Ad";
+		$data['brer'] = "ads";
+		$data['deta'] = \App\Product::find($id);
+		return view('ads/edit')->with($data);
+	}
 	public function ads_save()
 	{
 		//dd(Input::all());
+		$addon = explode("-", Input::get('category'))[1];
 		$ad = new \App\Product;
 		$ad->name = Input::get('title');
 		$ad->description = Input::get('description');
 		$ad->id_pilar = Input::get('category');
+		$ad->pilar_addon = $addon;
 		$ad->id_kios = Input::get('id_kios');
 		$ad->id_user = Auth::user()->id;
 		$ad->slug = str_slug(Input::get('title'))."-".Auth::user()->id."-".uniqid();

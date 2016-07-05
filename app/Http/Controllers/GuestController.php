@@ -28,7 +28,7 @@ class GuestController extends Controller {
 		$data['bret'] = "Store";
 		$data['name'] = \App\Kios::find($id)['name'];
 		$data['brer'] = "store";
-		$data['data'] = \App\Product::where('id_user',$data['id_u'])->where('id_kios',$id)->where('status',0)->paginate(10);
+		$data['data'] = \App\Product::where('id_user',$data['id_u'])->where('id_kios',$id)->where('status',1)->paginate(10);
 		return view('ads/lists')->with($data);
 	}
 	public function ad_detail($id)
@@ -42,19 +42,43 @@ class GuestController extends Controller {
 	}
 	public function services()
 	{
-		return view('product.lists');
+		$data['show'] = 1;
+		$data['id_p'] = \App\Pilar::where('code','services_pilar')->first()['id'];
+		$data['data'] = \App\Product::where('id_pilar',\App\Pilar::where('code','services_pilar')->first()['id'])->where('status',1)->paginate(10);
+		$data['name'] = "Services";
+		$data['bret'] = "Ads";
+		$data['brer'] = "pilars";
+		return view('product.lists')->with($data);
 	}
 	public function motorcycles()
 	{
-		return view('product.lists');
+		$data['show'] = 1;
+		$data['id_p'] = \App\Pilar::where('code','motorcycles_pilar')->first()['id'];
+		$data['data'] = \App\Product::where('id_pilar',\App\Pilar::where('code','motorcycles_pilar')->first()['id'])->where('status',1)->paginate(10);
+		$data['name'] = "Motorcycles";
+		$data['bret'] = "Ads";
+		$data['brer'] = "pilars";
+		return view('product.lists')->with($data);
 	}
 	public function cars()
 	{
-		return view('product.lists');
+		$data['show'] = 1;
+		$data['id_p'] = \App\Pilar::where('code','cars_pilar')->first()['id'];
+		$data['data'] = \App\Product::where('id_pilar',\App\Pilar::where('code','cars_pilar')->first()['id'])->where('status',1)->paginate(10);
+		$data['name'] = "Cars";
+		$data['bret'] = "Ads";
+		$data['brer'] = "pilars";
+		return view('product.lists')->with($data);
 	}
 	public function accessories()
 	{
-		return view('product.lists');
+		$data['show'] = 1;
+		$data['id_p'] = \App\Pilar::where('code','accessories_pilar')->first()['id'];
+		$data['data'] = \App\Product::where('id_pilar',\App\Pilar::where('code','accessories_pilar')->first()['id'])->where('status',1)->paginate(10);
+		$data['name'] = "Accessories";
+		$data['bret'] = "Ads";
+		$data['brer'] = "pilars";
+		return view('product.lists')->with($data);
 	}
 
 	public function get_ongkir()

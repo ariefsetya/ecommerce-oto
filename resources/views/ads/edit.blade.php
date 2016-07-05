@@ -32,7 +32,7 @@
 									<select class="" required="" name="id_kios">
 									  <option value="">--Select Store--</option>
 									  @foreach(\App\Kios::all() as $key)
-									  	<option value="{{$key->id}}">{{$key->name}}</option>
+									  	<option {{$key->id==$deta->id_kios?"selected":""}} value="{{$key->id}}">{{$key->name}}</option>
 									  @endforeach
 									</select>
 									<div class="clearfix"></div>
@@ -41,10 +41,10 @@
 									  <option value="">--Select Category--</option>
 									  @foreach(\App\Pilar::all() as $key)
 									  	@if($key->id==3 or $key->id==4)
-									  	<option value="{{$key->id}}-1">{{$key->name}} for {{\App\Pilar::find(1)['name']}}</option>
-									  	<option value="{{$key->id}}-2">{{$key->name}} for {{\App\Pilar::find(2)['name']}}</option>
+									  	<option {{$key->id."-1"==$deta->id_pilar."-".$deta->pilar_addon?"selected":""}} value="{{$key->id}}-1">{{$key->name}} for {{\App\Pilar::find(1)['name']}}</option>
+									  	<option {{$key->id."-2"==$deta->id_pilar."-".$deta->pilar_addon?"selected":""}} value="{{$key->id}}-2">{{$key->name}} for {{\App\Pilar::find(2)['name']}}</option>
 									  	@else
-									  	<option value="{{$key->id}}">{{$key->name}}</option>
+									  	<option {{$key->id==$deta->id_pilar?"selected":""}} value="{{$key->id}}">{{$key->name}}</option>
 									  	@endif
 									  @endforeach
 									</select>
@@ -60,7 +60,7 @@
 									<label>Make Name <span>*</span></label>
 									<input name="new_make" id="new_make" oninput="change_model()" type="text" class="" placeholder="">
 									</div>
-									<div id="model_div" style="display: none;">
+									<div id="model_div">
 									<div class="clearfix"></div>
 									<label>Model <span>*</span></label>
 									<select onchange="change_model()" class="" required name="model" id="model">
@@ -88,7 +88,7 @@
 									<input name="title" id="title" type="text" readonly required class="phone" placeholder="">
 									<div class="clearfix"></div>
 									<label>Ad Description <span>*</span></label>
-									<textarea rows="4" data-autoresize name="description" required class="mess" placeholder="Write few lines about your product"></textarea>
+									<textarea rows="4" data-autoresize name="description" required class="mess" placeholder="Write few lines about your product">{{$deta->description}}</textarea>
 									<div class="clearfix"></div>
 									<div id="exterior_color_div" style="display: none;">
 									<div class="clearfix"></div>
@@ -146,6 +146,9 @@
 
 	<script src="{{url('img-uploader/src/jquery.picture.cut.js')}}"></script>
 	<script type="text/javascript">
+	var make_id={{\App\ProductCategory::where('id_kategori',\App\JKategori::where('code','make')->first()['id'])->where('id_product',$deta->id)->first()['value']}};
+	var model_id={{\App\ProductCategory::where('id_kategori',\App\JKategori::where('code','model')->first()['id'])->where('id_product',$deta->id)->first()['value']}};
+	var deta = {!!json_encode($deta)!!};
 	function showing(id) {
 		$("#"+id).fadeIn();
 		$("#"+id).attr('required',true);
@@ -164,10 +167,13 @@
 	}
 	var data_kirim = 0;
 	var accs = 0;
+	change_category();
+	enabling('make');
+	enabling('model');
+	showing('make');
+	showing('model');
 	function change_category() {
-		$("#make").val('');
-		$("#model").val('');
-		disabling('make');
+		//disabling('make');
 		var isi = $("#category").val();
 		var option = '';
 		if(isi.split('-').length==1){
@@ -193,17 +199,19 @@
 			}
 		}
 		get_make(function(data) {
-			$("#model").val('');
-			disabling('model');
+			$("#model").val(model_id);
+			//disabling('model');
 			enabling('make');
 			enabling('model');
 			$("#make").html(data);
 			showing("make_div");
 		});
-		change_make();
 		change_model();
+		change_make();
 	}
 	function change_make(){
+		showing('make');
+		showing('model');
 		//disabling('model');
 		var isi = $("#make").val();
 		var option = '';
@@ -224,13 +232,14 @@
 				//$("#model").css('background-color','white');
 				$("#model").html(data);
 				if(isi==0){
-					//$("#model").val(0);
-					disabling('model');
+					$("#model").val(0);
+					//disabling('model');
 					//$("#model").css('background-color','#ccc');
 					//$("#model").attr('disabled',true);
 				}
 				$("#model_div").fadeIn();
 				change_model();
+				change_make();
 			});
 		}else{
 			change_model();
@@ -251,9 +260,12 @@
 			//$("#new_model").attr('required',true);
 			showing('new_model');
 			change_model();
+			change_make();
 		}
 	}
 	function change_model() {
+	showing('make');
+	showing('model');
 		var isi = $("#model").val();
 		var option = '';
 		if(isi!="add_new"){
@@ -286,11 +298,15 @@
 			model = $("#new_model").val();
 		}
 		$("#title").val($("#category option:selected").text()+" : "+make+" "+model+addon);
+		
+		change_make();
 	}
 	function change_year(){
 		change_model();
 	}
 	function get_make(id) {
+	showing('make');
+	showing('model');
 	var html = '';
 		$.ajax({
 			url:"{{route('get_make_id')}}",
@@ -300,10 +316,10 @@
 			success:function(data) {
 				html +='<option value="">--Select Make--</option>';
 				if(accs==1){
-					html +='<option value="0">Any Make</option>';
+					html +='<option '+(data[key].id==make_id?"selected":"")+' value="0">Any Make</option>';
 				}
 				for(key in data){
-					html +='<option value="'+data[key].id+'">'+data[key].name+'</option>';
+					html +='<option '+(data[key].id==make_id?"selected":"")+' value="'+data[key].id+'">'+data[key].name+'</option>';
 				}
 				html +='<option value="add_new">Request New Make</option>';
 				id(html);
@@ -312,6 +328,8 @@
 	}
 
 	function get_model(id) {
+	showing('make');
+	showing('model');
 	var html = '';
 		$.ajax({
 			url:"{{route('get_model_id')}}",
@@ -321,10 +339,10 @@
 			success:function(data) {
 				html +='<option value="">--Select Model--</option>';
 				if(accs==1){
-					html +='<option value="0">Any Model</option>';
+					html +='<option '+(data[key].id==model_id?"selected":"")+' value="0">Any Model</option>';
 				}
 				for(key in data){
-					html +='<option value="'+data[key].id+'">'+data[key].name+'</option>';
+					html +='<option '+(data[key].id==model_id?"selected":"")+' value="'+data[key].id+'">'+data[key].name+'</option>';
 				}
 				html +='<option value="add_new">Request New Model</option>';
 				id(html);

@@ -1,13 +1,13 @@
 @extends('app')
 
 @section('body')
-<div class="main-banner banner text-center" style="background: url({{url(\App\Appconfig::where('key','img_banner')->first()['value'])}}) no-repeat;background-size: cover;background-position: center;">
+<!-- <div class="main-banner banner text-center" style="background: url({{url(\App\Appconfig::where('key','img_banner')->first()['value'])}}) no-repeat;background-size: cover;background-position: center;">
     <div class="container">    
       <h1>{{\App\Appconfig::where('key','heading')->first()['value']}}</h1>
       <p>{{\App\Appconfig::where('key','subheading')->first()['value']}}</p>
       <a href="{{route(\App\Appconfig::where('key','btn_heading_url')->first()['value'])}}">{{\App\Appconfig::where('key','btn_heading')->first()['value']}}</a>
     </div>
-  </div>
+  </div> -->
 <div class="total-ads main-grid-border">
 		<div class="container">
 			<ol class="breadcrumb" style="margin-bottom: 5px;margin-top: 20px;">
@@ -22,30 +22,7 @@
 						<div id="container">
 							<div class="clearfix"></div>
 							<ul class="list">
-							@foreach($data as $key)
-								<a href="{{route('store_detail',$key->id)}}">
-									<li>
-									<div class="photo">
-									@if($key->photo==0)
-									<img src="{{url('img-uploader/src/img/icon_add_image2.png')}}" title="" alt="" />
-									@else
-									<img src="{{\App\Image::find($key->photo)['image_type']=='url'?url('uploads/'.\App\Image::find($key->photo)['image']):""}}" title="" alt="" />
-									@endif
-									</div>
-									<div class="dalam">
-									<section class="list-left">
-									<h5 class="title">{{$key->name}}</h5>
-									<span class="cityname">{{$key->description}}</span>
-									</section>
-									<section class="list-right">
-									<span class="date">{{$key->created_at}}</span>
-									<span class="cityname">{{\App\City::find($key->id_city)['nama'].", ".\App\Province::find($key->id_province)['nama']}}</span>
-									</section>
-									</div>
-									<div class="clearfix"></div>
-									</li> 
-								</a>
-							@endforeach
+							@include('utils.store-list')
 							</ul>
 					  	</div>
 					</div>

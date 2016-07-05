@@ -15,7 +15,15 @@
 			<div class="product-desc">
 				<div class="col-md-8 product-view">
 					<h2>{{$deta->name}}</h2>
-					<p> <i class="glyphicon glyphicon-map-marker"></i><a href="#">{{\App\Province::find($kios->id_province)['nama']}}</a>, <a href="#">{{\App\City::find($kios->id_city)['nama']}}</a>| Added at {{date_format(date_create($deta->created_at),"D, d M Y H:i:s")}}, Ad ID: {{$deta->id}}</p>
+					<?php
+					$sup = 'th';
+					if(substr(date_format(date_create($deta->created_at),"d"),strlen(date_format(date_create($deta->created_at),"d"))-1,1)==2){
+						$sup = 'nd';
+					}else if(substr(date_format(date_create($deta->created_at),"d"),strlen(date_format(date_create($deta->created_at),"d"))-1,1)==1){
+						$sup = 'st';
+					}
+					?>
+					<p> <i class="glyphicon glyphicon-map-marker"></i><a href="#">{{\App\Province::find($kios->id_province)['nama']}}</a>, <a href="#">{{\App\City::find($kios->id_city)['nama']}}</a> | Added on {!!date_format(date_create($deta->created_at),"D, F d")."<sup>".$sup."</sup>".date_format(date_create($deta->created_at)," Y")." at ".date_format(date_create($deta->created_at),"H:i:s")!!}, Ad ID : #{{explode('-',$deta->slug)[sizeof(explode('-',$deta->slug))-1]}}</p>
 					<div class="flexslider">
 						<ul class="slides">
 							@foreach(\App\Image::where('code','product-'.$deta->id)->get() as $key)
@@ -23,14 +31,15 @@
 								<img src="{{url('uploads/'.$key->image)}}" />
 							</li>
 							@endforeach
+							@if(sizeof(\App\Image::where('code','product-'.$deta->id)->get())==0)
+							<li data-thumb="{{url('img-uploader/src/img/icon_add_image2.png')}}">
+								<img src="{{url('img-uploader/src/img/icon_add_image2.png')}}" />
+							</li>
+							@endif
 						</ul>
 					</div>
 					<div class="product-details">
-						<h4>Brand : <a href="#">Company name</a></h4>
-						<h4>Views : <strong>150</strong></h4>
-						<p><strong>Display </strong>: 1.5 inch HD LCD Touch Screen</p>
-						<p><strong>Summary</strong> : It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
-					
+						<p>{{$deta->description}}</p>
 					</div>
 				</div>
 				<div class="col-md-4 product-details-grid">

@@ -1,13 +1,13 @@
 @extends('app')
 
 @section('body')
-<div class="main-banner banner text-center" style="background: url({{url(\App\Appconfig::where('key','img_banner')->first()['value'])}}) no-repeat;background-size: cover;background-position: center;">
+<!-- <div class="main-banner banner text-center" style="background: url({{url(\App\Appconfig::where('key','img_banner')->first()['value'])}}) no-repeat;background-size: cover;background-position: center;">
     <div class="container">    
       <h1>{{\App\Appconfig::where('key','heading')->first()['value']}}</h1>
       <p>{{\App\Appconfig::where('key','subheading')->first()['value']}}</p>
       <a href="{{route(\App\Appconfig::where('key','btn_heading_url')->first()['value'])}}">{{\App\Appconfig::where('key','btn_heading')->first()['value']}}</a>
     </div>
-  </div>
+  </div> -->
 <div class="total-ads main-grid-border">
 		<div class="container">
 			<ol class="breadcrumb" style="margin-bottom: 5px;margin-top: 20px;">
@@ -30,33 +30,14 @@
 							@if(sizeof($data)==0)
 								<h2>Sorry, but no one Ad</h2>
 								@if($show==1)
+								@if(Auth::check())
 								@if(Auth::user()->id==$id_u)
 									<h3><a href="{{route('ads_create')}}">Create one here</a></h3>
 								@endif
 								@endif
+								@endif
 							@endif
-							@foreach($data as $key)
-								<a href="{{route('ad_detail',$key->slug)}}">
-									<li>
-									<div class="photo">
-									<img src="{{sizeof(\App\Image::where('code','product-'.$key->id)->get())==0?url('img-uploader/src/img/icon_add_image2.png'):url('uploads/'.\App\Image::where('code','product-'.$key->id)->first()['image'])}}" title="" alt="" />
-									</div>
-									<div class="dalam">
-									<section class="list-right">
-									</section>
-									<section class="list-left">
-									<h5 class="title">{{$key->name}}</h5>
-									<span class="cityname">{{\App\Kios::find($key->id_kios)['name']}} : {{\App\Province::find(\App\Kios::find($key->id_kios)['id_province'])['nama']}}, {{\App\City::find(\App\Kios::find($key->id_kios)['id_city'])['nama']}}</span>
-									<span class="catpath">{{\App\Pilar::find($key->id_pilar)['name']}} » {{\App\Kategori::find(\App\ProductCategory::where('id_product',$key->id)->where('id_kategori',\App\JKategori::where('code','make')->first()['id'])->first()['value'])['name']}}</span>
-									</section>
-									<section class="list-right">
-									<span class="adprice">Rp. {{number_format($key->price,2)}}</span>
-									<span class="">Posted at {{date_format(date_create($key->created_at),"D, d M Y H:i:s")}}</span>
-									</section>
-									</div>
-									</li> 
-								</a>
-							@endforeach
+							@include('utils.ads-list')
 							</ul>
 					  </div>
 				</div>

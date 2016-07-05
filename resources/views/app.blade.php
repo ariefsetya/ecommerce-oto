@@ -92,14 +92,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       @yield('footer')
       <script type="text/javascript">
         
-    jQuery.each(jQuery('textarea[data-autoresize]'), function() {
-        var offset = this.offsetHeight - this.clientHeight;
-     
-        var resizeTextarea = function(el) {
-            jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
-        };
-        jQuery(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
-    });
+        jQuery.each(jQuery('textarea[data-autoresize]'), function() {
+            var offset = this.offsetHeight - this.clientHeight;
+         
+            var resizeTextarea = function(el) {
+                jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
+            };
+            jQuery(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
+        });
+        function redir(act,id) {
+          if(act=='edit'){
+            window.location.assign('{{route("ads_edit")}}/'+id);
+          }
+          if(act=='delete'){
+            window.location.assign('{{route("ads_delete")}}/'+id);
+          }
+          event.preventDefault();
+        }
       </script>
       <div class="footer-bottom text-center">
         <div class="container">

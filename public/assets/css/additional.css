@@ -1,3 +1,10 @@
+#container .list li .adprice {
+    font-size: 19px !important;
+    color: #333;
+}
+.product-view p a {
+    margin-right: 0px !important;
+}
 .flexslider .slides img{
     width: 100%;
 }
