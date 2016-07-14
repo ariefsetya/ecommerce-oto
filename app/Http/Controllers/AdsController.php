@@ -79,12 +79,18 @@ class AdsController extends Controller {
 		$data['name'] = "Edit Ad";
 		$data['brer'] = "ads";
 		$data['deta'] = \App\Product::find($id);
+		$data['foto'] = \App\Image::where('code','product-'.$id)->get();
 		return view('ads/edit')->with($data);
 	}
 	public function ads_save()
 	{
 		//dd(Input::all());
-		$addon = explode("-", Input::get('category'))[1];
+
+		if(Input::get('id')!==null){
+			$this->ads_delete(Input::get('id'));
+		}
+
+		$addon = sizeof(explode("-", Input::get('category')))==2?explode("-", Input::get('category'))[1]:0;
 		$ad = new \App\Product;
 		$ad->name = Input::get('title');
 		$ad->description = Input::get('description');
@@ -137,10 +143,22 @@ class AdsController extends Controller {
 		$pcec->value = Input::get('exterior_color');
 		$pcec->save();
 
+		$pcec = new \App\ProductCategory;
+		$pcec->id_product = $ad->id;
+		$pcec->id_kategori = \App\JKategori::where('code','condition')->first()['id'];
+		$pcec->value = Input::get('condition');
+		$pcec->save();
+
 		$pces = new \App\ProductCategory;
 		$pces->id_product = $ad->id;
 		$pces->id_kategori = \App\JKategori::where('code','engine_size')->first()['id'];
 		$pces->value = Input::get('engine_size');
+		$pces->save();
+
+		$pces = new \App\ProductCategory;
+		$pces->id_product = $ad->id;
+		$pces->id_kategori = \App\JKategori::where('code','year')->first()['id'];
+		$pces->value = Input::get('year');
 		$pces->save();
 
 		for($i=0;$i<sizeof(Input::get('image_name'));$i++){
@@ -158,6 +176,14 @@ class AdsController extends Controller {
 		}
 
 		return redirect(route('ads_moderation'));
+	}
+	public function ads_delete($value)
+	{
+		$a = \App\Product::find($value);
+		$a->status = 4;
+		$a->save();
+
+		return redirect(route('ads_published'));
 	}
 
 }
