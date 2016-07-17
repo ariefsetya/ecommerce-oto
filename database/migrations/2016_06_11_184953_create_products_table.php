@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration {
 			$table->integer('id_user');
 			$table->string('name');
 			$table->string('slug');
-			$table->string('description');
+			$table->longtext('description');
 			$table->string('pilar_addon');
 			$table->integer('stok');
 			$table->integer('status');
