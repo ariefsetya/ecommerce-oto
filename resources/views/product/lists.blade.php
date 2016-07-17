@@ -2,7 +2,7 @@
 
 @section('body')
 <div class="main-banner banner text-center" style="background: url({{url(\App\Appconfig::where('key','img_banner')->first()['value'])}}) no-repeat;background-size: cover;background-position: center;">
-    <div class="container">    
+    <div class="container">
       <h1>{{\App\Appconfig::where('key','heading')->first()['value']}}</h1>
       <p>{{\App\Appconfig::where('key','subheading')->first()['value']}}</p>
       <a href="{{route(\App\Appconfig::where('key','btn_heading_url')->first()['value'])}}">{{\App\Appconfig::where('key','btn_heading')->first()['value']}}</a>
@@ -44,7 +44,7 @@
 			<div class="ads-grid">
 				@include('utils.sidebar-buyer')
 				<div class="ads-display col-md-9">
-					<div class="wrapper">					
+					<div class="wrapper">
 							<div id="container">
 								<div class="clearfix"></div>
 							<ul class="list">
@@ -55,24 +55,24 @@
 				</div>
 				<div class="clearfix"></div>
 			</div>
-		</div>	
+		</div>
 	</div>
 @endsection
 
 @section('footer')
-	<script type='text/javascript'>//<![CDATA[ 
+	<script type='text/javascript'>//<![CDATA[
 	$(window).load(function(){
 	 $( "#slider-range" ).slider({
 				range: true,
-				min: 100000,
-				max: 10000000,
-				values: [ 200000, 8000000 ],
-				slide: function( event, ui ) {  $( "#amount" ).val(rupiah(ui.values[ 0 ]) + " - " + rupiah(ui.values[ 1 ]) );
+				min: 1,
+				max: 500,
+				values: [ 2, 300 ],
+				slide: function( event, ui ) {  $( "#amount" ).val(rupiah(ui.values[ 0 ]) + " milion - " + rupiah(ui.values[ 1 ]) +' milion');
 				}
 	 });
-	$( "#amount" ).val( rupiah($( "#slider-range" ).slider( "values", 0 )) + " - " + rupiah($( "#slider-range" ).slider( "values", 1 )) );
+	$( "#amount" ).val( rupiah($( "#slider-range" ).slider( "values", 0 )) + " milion - " + rupiah($( "#slider-range" ).slider( "values", 1 ))+' milion' );
 
-	});//]]>    
+	});//]]>
 function rupiah(value)
   {
   value += '';

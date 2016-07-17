@@ -3,7 +3,7 @@
 @section('body')
 
   <div class="main-banner banner text-center" style="background: url({{url(\App\Appconfig::where('key','img_banner')->first()['value'])}}) no-repeat;background-size: cover;background-position: center;">
-    <div class="container">    
+    <div class="container">
       <h1>{{\App\Appconfig::where('key','heading')->first()['value']}}</h1>
       <p>{{\App\Appconfig::where('key','subheading')->first()['value']}}</p>
       <a href="{{route(\App\Appconfig::where('key','btn_heading_url')->first()['value'])}}">{{\App\Appconfig::where('key','btn_heading')->first()['value']}}</a>
@@ -28,9 +28,11 @@
           <div class="clearfix"></div>
         </div>
       </div>
+
+      @if(sizeof(\App\Product::where('promo',1)->get())>0)
       <div class="trending-ads">
         <div class="container">
-        <!-- slider -->
+
         <div class="trend-ads">
           <h2>{{\App\Appconfig::where('key','body_heading')->first()['value']}}</h2>
               <ul id="flexiselDemo3">
@@ -40,7 +42,7 @@
                     <a href="single.html">
                       <img src="{{url('assets/images/bk10.jpg')}}"/>
                       <span class="price">Rp. 100.000.000,00</span>
-                    </a> 
+                    </a>
                     <div class="ad-info">
                       <h5>There are many variations of passages</h5>
                       <span>1 hour ago</span>
@@ -50,7 +52,7 @@
                     <a href="single.html">
                       <img src="{{url('assets/images/c4.jpg')}}"/>
                       <span class="price">&#36; 399</span>
-                    </a> 
+                    </a>
                     <div class="ad-info">
                       <h5>Lorem Ipsum is simply dummy</h5>
                       <span>3 hour ago</span>
@@ -60,7 +62,7 @@
                     <a href="single.html">
                       <img src="{{url('assets/images/bk3.jpg')}}"/>
                       <span class="price">&#36; 199</span>
-                    </a> 
+                    </a>
                     <div class="ad-info">
                       <h5>It is a long established fact that a reader</h5>
                       <span>8 hour ago</span>
@@ -70,20 +72,19 @@
                     <a href="single.html">
                       <img src="{{url('assets/images/c8.jpg')}}"/>
                       <span class="price">&#36; 159</span>
-                    </a> 
+                    </a>
                     <div class="ad-info">
                       <h5>passage of Lorem Ipsum you need to be</h5>
                       <span>19 hour ago</span>
                     </div>
                   </div>
                 </li>
-                {{"divide 4"}}
                 <li>
                   <div class="col-md-3 biseller-column">
                     <a href="single.html">
                       <img src="{{url('assets/images/bk5.jpg')}}"/>
                       <span class="price">Rp. 100.000,00</span>
-                    </a> 
+                    </a>
                     <div class="ad-info">
                       <h5>There are many variations of passages</h5>
                       <span>1 hour ago</span>
@@ -93,7 +94,7 @@
                     <a href="single.html">
                       <img src="{{url('assets/images/c2.jpg')}}"/>
                       <span class="price">&#36; 399</span>
-                    </a> 
+                    </a>
                     <div class="ad-info">
                       <h5>Lorem Ipsum is simply dummy</h5>
                       <span>3 hour ago</span>
@@ -103,7 +104,7 @@
                     <a href="single.html">
                       <img src="{{url('assets/images/c6.jpg')}}"/>
                       <span class="price">&#36; 199</span>
-                    </a> 
+                    </a>
                     <div class="ad-info">
                       <h5>It is a long established fact that a reader</h5>
                       <span>8 hour ago</span>
@@ -113,7 +114,7 @@
                     <a href="single.html">
                       <img src="{{url('assets/images/bk7.jpg')}}"/>
                       <span class="price">&#36; 159</span>
-                    </a> 
+                    </a>
                     <div class="ad-info">
                       <h5>passage of Lorem Ipsum you need to be</h5>
                       <span>19 hour ago</span>
@@ -128,32 +129,34 @@
                 visibleItems:1,
                 animationSpeed: 800,
                 autoPlay: true,
-                autoPlaySpeed: 5000,        
+                autoPlaySpeed: 5000,
                 pauseOnHover: true,
                 enableResponsiveBreakpoints: true,
-                responsiveBreakpoints: { 
-                  portrait: { 
+                responsiveBreakpoints: {
+                  portrait: {
                     changePoint:480,
                     visibleItems:1
-                  }, 
-                  landscape: { 
+                  },
+                  landscape: {
                     changePoint:640,
                     visibleItems:1
                   },
-                  tablet: { 
+                  tablet: {
                     changePoint:768,
                     visibleItems:1
                   }
                 }
               });
-              
+
             });
              </script>
              <script type="text/javascript" src="{{url('assets/js/jquery.flexisel.js')}}"></script>
-          </div>   
+          </div>
+
       </div>
-      <!-- //slider -->       
+      <!-- //slider -->
       </div>
+      @endif
       <div class="mobile-app">
         <div class="container">
           <div class="col-md-5 app-left">
@@ -191,7 +194,7 @@
             <div class="col-md-3 footer-grid">
               <h4 class="footer-head">Help</h4>
               <ul>
-                <li><a href="howitworks.html">How it Works</a></li>           
+                <li><a href="howitworks.html">How it Works</a></li>
                 <li><a href="sitemap.html">Sitemap</a></li>
                 <li><a href="faq.html">Faq</a></li>
                 <li><a href="feedback.html">Feedback</a></li>
@@ -202,10 +205,10 @@
             <div class="col-md-3 footer-grid">
               <h4 class="footer-head">Information</h4>
               <ul>
-                <li><a href="regions.html">Locations Map</a></li> 
+                <li><a href="regions.html">Locations Map</a></li>
                 <li><a href="terms.html">Terms of Use</a></li>
-                <li><a href="popular-search.html">Popular searches</a></li> 
-                <li><a href="privacy.html">Privacy Policy</a></li>  
+                <li><a href="popular-search.html">Popular searches</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
               </ul>
             </div>
             <div class="col-md-3 footer-grid">
@@ -216,21 +219,21 @@
                   <li><span class="glyphicon glyphicon-map-marker"></span></li>
                   <li>CENTER FOR FINANCIAL ASSISTANCE TO DEPOSED NIGERIAN ROYALTY</li>
                   <div class="clearfix"></div>
-                </ul> 
+                </ul>
                 <ul class="location">
                   <li><span class="glyphicon glyphicon-earphone"></span></li>
                   <li>+0 561 111 235</li>
                   <div class="clearfix"></div>
-                </ul> 
+                </ul>
                 <ul class="location">
                   <li><span class="glyphicon glyphicon-envelope"></span></li>
                   <li><a href="mailto:info@example.com">mail@example.com</a></li>
                   <div class="clearfix"></div>
-                </ul>           
+                </ul>
               </address>
             </div>
             <div class="clearfix"></div>
-          </div>            
-        </div>  
-      </div>  
+          </div>
+        </div>
+      </div>
 @endsection
