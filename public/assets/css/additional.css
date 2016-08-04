@@ -134,3 +134,12 @@ a{
 .grid_:hover{
     background-color: #eee;
 }
+.ui-slider-handle.ui-state-default.ui-corner-all{
+    width: 20px !important;
+    height: 20px !important;
+    border: 5px solid rgba(1, 161, 133, 0.5) !important;
+    cursor: col-resize !important;
+    top:-7px !important;
+    background: #ccc !important;
+    margin-left: -10px !important;
+}

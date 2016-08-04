@@ -34,7 +34,18 @@
 								@endfor
 									<div class="clearfix"></div>
 									<label>Store Name <span>*</span></label>
-									<input name="title" type="text" required class="phone" placeholder="">
+									<input name="title" type="text" required class="phone" placeholder="Your store name">
+									<div class="clearfix"></div>
+									<label>Phone <span>*</span></label>
+									<input name="phone" type="text" required class="phone" placeholder="Your store phone number">
+									<div class="clearfix"></div>
+									<label><span></span></label>
+									<input name="accept_wa" type="checkbox"></input> Accept WhatsApp
+									<div class="clearfix"></div>
+									<label><span></span></label>
+									<div class="clearfix"></div>
+									<label>BBM Pin<span></span></label>
+									<input name="bbm" type="text" required class="phone" placeholder="Your store BBM pin">
 									<div class="clearfix"></div>
 									<label>Description <span>*</span></label>
 									<textarea data-autoresize required name="description" rows=5 class="" placeholder="Write few lines about your store"></textarea>

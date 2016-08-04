@@ -10,11 +10,6 @@ body{
 	background:#fff;
 }
 body a{
-    transition:0.5s all;
-	-webkit-transition:0.5s all;
-	-moz-transition:0.5s all;
-	-o-transition:0.5s all;
-	-ms-transition:0.5s all;
 	font-weight:400;
 	font-family: 'Open Sans', sans-serif;
 }
@@ -1026,21 +1021,7 @@ ul.location li {
     display: inline-block;
     margin: 0;
 }
-span.glyphicon.glyphicon-map-marker {
-    margin-top: 3px;
-}
-span.glyphicon.glyphicon-map-marker, span.glyphicon.glyphicon-earphone, .glyphicon.glyphicon-envelope {
-    color: #fff;
-    font-size: 12px;
-    background-color: rgba(89, 194, 175, 0.68);
-    padding: 6px;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
-    vertical-align: top;
-}
+
 ul.location li:nth-child(2) {
     float: right;
     width: 85%;
@@ -2154,39 +2135,39 @@ form.submit {
 }
 p.p-price {
     float: left;
-    width: 50%;
+    width: 32%;
     margin: 0;
     font-size: 16px;
     font-weight: 400;
     color: #424242;
     vertical-align: middle;
-	margin-top:8px;
-	margin-left: 20px;
+	margin-left: 5px;
 }
 h3.rate {
     float: left;
     color: #2d89ef;
     font-size: 30px;
+    margin-top: 4px;
 }
 .condition h4,.itemtype h4 {
     margin: 0;
-    floaT: left;
-    font-size: 22px;
+    float: left;
+    margin-top: 2px;
 }
 .condition p,.itemtype p {
     margin: 0;
-	margin-left: 20px;
+	margin-left: 5px;
 }
 .product-price {
-    padding: 20px 0;
+    padding: 12px 0;
 }
 .condition {
-    padding: 20px 0;
+    padding: 12px 0;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 }
 .itemtype {
-    padding: 20px 0;
+    padding: 12px 0;
 }
 .interested {
     margin: 20px;

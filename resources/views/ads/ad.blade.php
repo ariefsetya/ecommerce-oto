@@ -46,38 +46,27 @@
 					<div class="item-price">
 						<div class="product-price">
 							<p class="p-price">Price</p>
-							<h3 class="rate">$ 259</h3>
+							<h4 class="rate">Rp. {{number_format($deta->price,2)}}</h4>
 							<div class="clearfix"></div>
 						</div>
 						<div class="condition">
 							<p class="p-price">Condition</p>
-							<h4>Good</h4>
+							<h4 class="rate">{{\App\Kategori::find(\App\ProductCategory::where('id_product',$deta->id)->where('id_kategori',\App\JKategori::where('code','condition')->first()['id'])->first()['value'])['name']}}</h4>
 							<div class="clearfix"></div>
 						</div>
 						<div class="itemtype">
 							<p class="p-price">Item Type</p>
-							<h4>Phones</h4>
+							<h4 class="rate">{{\App\Pilar::find($deta->id_pilar)['name']}}</h4>
 							<div class="clearfix"></div>
 						</div>
 					</div>
-					<div class="interested text-center">
+					<div class="interested">
 						<h4>Interested in this Ad?<small> Contact the Seller!</small></h4>
-						<p><i class="glyphicon glyphicon-earphone"></i>00-85-9875462655</p>
+						<br>
+						<span><img src="http://www.freeiconspng.com/uploads/dentist-rochester-ny--contemporary-dentistry-rochester-ny-24.png" style="width: 30px;"> {{$kios->phone}} @if($kios->accept_wa=="on") - WhatsApp Accepted @endif</span>
+						<br>
+						<span><img src="http://www.freeiconspng.com/uploads/logo-bbm-blackberry-messenger--logodesain-29.png" style="width:30px;"> {{$kios->bbm}}</span>
 					</div>
-						<div class="tips">
-						<h4>Safety Tips for Buyers</h4>
-							<ol>
-								<li><a href="#">Contrary to popular belief.</a></li>
-								<li><a href="#">Contrary to popular belief.</a></li>
-								<li><a href="#">Contrary to popular belief.</a></li>
-								<li><a href="#">Contrary to popular belief.</a></li>
-								<li><a href="#">Contrary to popular belief.</a></li>
-								<li><a href="#">Contrary to popular belief.</a></li>
-								<li><a href="#">Contrary to popular belief.</a></li>
-								<li><a href="#">Contrary to popular belief.</a></li>
-								<li><a href="#">Contrary to popular belief.</a></li>
-							</ol>
-						</div>
 				</div>
 			<div class="clearfix"></div>
 			</div>

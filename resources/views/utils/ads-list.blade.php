@@ -1,4 +1,5 @@
 @foreach($data as $key)
+<ul class="list">
 	<a href="{{$show==1?route('ad_detail',$key->slug):'#'}}">
 		<li>
 		<div class="photo">
@@ -28,4 +29,6 @@
 		</div>
 		</li> 
 	</a>
+</ul>
 @endforeach
+<div class="pull-right">{!!$data->render()!!}</div>

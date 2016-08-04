@@ -20,6 +20,9 @@ class CreateKiosTable extends Migration {
 			$table->integer('id_city');
 			$table->string('address');
 			$table->string('name');
+			$table->string('phone');
+			$table->string('accept_wa');
+			$table->string('bbm');
 			$table->string('description');
 			$table->integer('photo');
 			$table->integer('banner');

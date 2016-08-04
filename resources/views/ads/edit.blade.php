@@ -85,6 +85,16 @@
 									</select>
 									</div>
 									<div class="clearfix"></div>
+									<div id="part_div" style="display: none">
+									<div class="clearfix"></div>
+									<label>Part <span>*</span></label>
+									<select class="" name="part" id="part">
+									  <option value="">--Select Part--</option>
+									  @foreach(\App\Kategori::where('id_jenis',\App\JKategori::where('code','part')->first()['id'])->get() as $key)
+									  <option value="{{$key->id}}">{{$key->name}}</option>
+									  @endforeach
+									</select>
+									</div>
 									<label>Ad Title <span>*</span></label>
 									<input name="title" id="title" type="text" readonly required class="phone" placeholder="">
 									<div class="clearfix"></div>
@@ -437,7 +447,9 @@ function change_category() {
 			hiding("engine_size_div");
 			if(isi.split('-')[0]==4){
 				showing("condition_div");
+				showing("part_div");
 			}else{
+				hiding("part_div");
 				hiding("condition_div");
 			}
 

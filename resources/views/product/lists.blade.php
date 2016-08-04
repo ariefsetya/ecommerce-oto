@@ -11,6 +11,7 @@
 <div class="total-ads main-grid-border">
 		<div class="container">
 			<div class="select-box">
+				<form method="POST" action="{{route('post_search')}}">
 				<div class="select-city-for-local-ads ads-list">
 					<label>Select your city to see local ads</label>
 					@include('utils.city-select')
@@ -24,9 +25,9 @@
 					<div class="search">
 						<div id="custom-search-input">
 						<div class="input-group">
-							<input type="text" class="form-control input-lg" placeholder="Buscar" />
+							<input type="text" class="form-control input-lg" placeholder="Buscar" name="query" value="{{($query=="%")?"":$query}}" />
 							<span class="input-group-btn">
-								<button class="btn btn-info btn-lg" type="button">
+								<button class="btn btn-info btn-lg" type="submit">
 									<i class="glyphicon glyphicon-search"></i>
 								</button>
 							</span>
@@ -34,6 +35,8 @@
 					</div>
 					</div>
 				</div>
+				<input type="hidden" name="_token" value="{{csrf_token()}}"></input>
+				</form>
 				<div class="clearfix"></div>
 			</div>
 			<ol class="breadcrumb" style="margin-bottom: 5px;margin-top: 20px;">
@@ -45,13 +48,11 @@
 				@include('utils.sidebar-buyer')
 				<div class="ads-display col-md-9">
 					<div class="wrapper">
-							<div id="container">
-								<div class="clearfix"></div>
-							<ul class="list">
-								@include('utils.ads-list')
-							</ul>
-					  </div>
-				</div>
+						<div id="container">
+							<div class="clearfix"></div>
+							@include('utils.ads-list')
+					  	</div>
+					</div>
 				</div>
 				<div class="clearfix"></div>
 			</div>
@@ -64,13 +65,13 @@
 	$(window).load(function(){
 	 $( "#slider-range" ).slider({
 				range: true,
-				min: 1,
-				max: 500,
-				values: [ 2, 300 ],
-				slide: function( event, ui ) {  $( "#amount" ).val(rupiah(ui.values[ 0 ]) + " milion - " + rupiah(ui.values[ 1 ]) +' milion');
+				min: 10000,
+				max: 100000000,
+				values: [ 30000, 80000000 ],
+				slide: function( event, ui ) {  $( "#amount" ).val(rupiah(ui.values[ 0 ]) + " - " + rupiah(ui.values[ 1 ]));
 				}
 	 });
-	$( "#amount" ).val( rupiah($( "#slider-range" ).slider( "values", 0 )) + " milion - " + rupiah($( "#slider-range" ).slider( "values", 1 ))+' milion' );
+	$( "#amount" ).val( rupiah($( "#slider-range" ).slider( "values", 0 )) + " - " + rupiah($( "#slider-range" ).slider( "values", 1 )));
 
 	});//]]>
 function rupiah(value)

@@ -82,6 +82,14 @@ class CreateJKategorisTable extends Migration {
 		$x->save();
 		$x = new \App\JKategori;
 		$x->image = 0;
+		$x->name = 'Part';
+		$x->code = 'part';
+		$x->status = 'active';
+		$x->purpose = 'J-K';
+		$x->description = 'Sub Pilar Part';
+		$x->save();
+		$x = new \App\JKategori;
+		$x->image = 0;
 		$x->name = 'Condition';
 		$x->code = 'condition';
 		$x->status = 'active';

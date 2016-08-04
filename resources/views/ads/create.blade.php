@@ -84,8 +84,21 @@
 									</select>
 									</div>
 									<div class="clearfix"></div>
+									<div id="part_div" style="display: none">
+									<div class="clearfix"></div>
+									<label>Part <span>*</span></label>
+									<select class="" name="part" id="part">
+									  <option value="">--Select Part--</option>
+									  @foreach(\App\Kategori::where('id_jenis',\App\JKategori::where('code','part')->first()['id'])->get() as $key)
+									  <option value="{{$key->id}}">{{$key->name}}</option>
+									  @endforeach
+									</select>
+									</div>
 									<label>Ad Title <span>*</span></label>
 									<input name="title" id="title" type="text" readonly required class="phone" placeholder="">
+									<div class="clearfix"></div>
+									<label>Price <span>*</span></label>
+									<input name="price" id="price" oninput="change_price()" type="text" class="" placeholder="">
 									<div class="clearfix"></div>
 									<label>Ad Description <span>*</span></label>
 									<textarea rows="4" data-autoresize name="description" required class="mess" placeholder="Write few lines about your product"></textarea>
@@ -146,6 +159,13 @@
 
 	<script src="{{url('img-uploader/src/jquery.picture.cut.js')}}"></script>
 	<script type="text/javascript">
+		$('#price').priceFormat({
+	    prefix: 'Rp',
+	    centsSeparator: ',',
+	    thousandsSeparator: '.',
+    	clearPrefix: true,
+    	centsLimit: 0
+	});
 	function showing(id) {
 		$("#"+id).fadeIn();
 		$("#"+id).attr('required',true);
@@ -188,7 +208,9 @@
 			hiding("engine_size_div");
 			if(isi.split('-')[0]==4){
 				showing("condition_div");
+				showing("part_div");
 			}else{
+				hiding("part_div");
 				hiding("condition_div");
 			}
 		}
@@ -196,12 +218,11 @@
 			$("#model").val('');
 			disabling('model');
 			enabling('make');
-			enabling('model');
 			$("#make").html(data);
 			showing("make_div");
 		});
-		change_make();
-		change_model();
+		// change_make();
+		// change_model();
 	}
 	function change_make(){
 		//disabling('model');
@@ -224,10 +245,13 @@
 				//$("#model").css('background-color','white');
 				$("#model").html(data);
 				if(isi==0){
-					//$("#model").val(0);
-					disabling('model');
+					$("#model").val(0);
+					enabling('model');
 					//$("#model").css('background-color','#ccc');
 					//$("#model").attr('disabled',true);
+				}else{
+					$("#model").val('');
+					enabling('model');
 				}
 				$("#model_div").fadeIn();
 				change_model();
@@ -319,14 +343,16 @@
 			dataType:'json',
 			type:'POST',
 			success:function(data) {
-				html +='<option value="">--Select Model--</option>';
+				html +='<option value="" selected>--Select Model--</option>';
 				if(accs==1){
 					html +='<option value="0">Any Model</option>';
 				}
 				for(key in data){
 					html +='<option value="'+data[key].id+'">'+data[key].name+'</option>';
 				}
+				if($("#make").val()>0){
 				html +='<option value="add_new">Request New Model</option>';
+				}
 				id(html);
 			}
 		});

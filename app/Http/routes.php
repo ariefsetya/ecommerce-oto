@@ -29,12 +29,14 @@ Route::post('ajax/get_model_id',['as'=>'get_model_id','uses'=>'AjaxController@ge
 
 Route::get('home', 'WelcomeController@index');
 //pilars
-Route::get('services', ['as'=>'services_pilar','uses'=>'GuestController@services']);
 Route::get('categories', ['as'=>'pilars','uses'=>'GuestController@pilars']);
-Route::get('motorcycles', ['as'=>'motorcycles_pilar','uses'=>'GuestController@motorcycles']);
-Route::get('cars', ['as'=>'cars_pilar','uses'=>'GuestController@cars']);
-Route::get('accessories', ['as'=>'accessories_pilar','uses'=>'GuestController@accessories']);
+Route::get('services/{q?}/{r?}/{s?}/{t?}/{u?}', ['as'=>'services_pilar','uses'=>'GuestController@services']);
+Route::get('motorcycles/{q?}/{r?}/{s?}/{t?}/{u?}', ['as'=>'motorcycles_pilar','uses'=>'GuestController@motorcycles']);
+Route::get('cars/{q?}/{r?}/{s?}/{t?}/{u?}', ['as'=>'cars_pilar','uses'=>'GuestController@cars']);
+Route::get('accessories/{q?}/{r?}/{s?}/{t?}/{u?}', ['as'=>'accessories_pilar','uses'=>'GuestController@accessories']);
 Route::get('store/detail/{id}', ['as'=>'store_detail','uses'=>'GuestController@store_detail']);
+
+Route::post('post_search',['as'=>'post_search','uses'=>'GuestController@post_search']);
 
 //account
 Route::get('account/settings', ['as'=>'account_settings','uses'=>'HomeController@account_settings']);

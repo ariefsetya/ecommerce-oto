@@ -6,7 +6,7 @@
 						<input type="submit" value=" ">
 					</form>
 				</div> -->
-
+				@if($id_p>0)
 				<div class="range">
 					<h3 class="sear-head">Price range</h3>
 					<br>
@@ -27,6 +27,7 @@
 						@endforeach
 					</select>
 				</div>
+				@endif
 				<div class="featured-ads">
 					<h2 class="sear-head fer">Featured Ads</h2>
 					<div class="featured-ad">

@@ -12,16 +12,16 @@ class CreateCitiesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('cities', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->integer('id_provinsi');
-			$table->string('provinsi');
-			$table->string('nama');
-			$table->string('type');
-			$table->string('kodepos');
-			$table->timestamps();
-		});
+		// Schema::create('cities', function(Blueprint $table)
+		// {
+		// 	$table->increments('id');
+		// 	$table->integer('id_provinsi');
+		// 	$table->string('provinsi');
+		// 	$table->string('nama');
+		// 	$table->string('type');
+		// 	$table->string('kodepos');
+		// 	$table->timestamps();
+		// });
 	}
 
 	/**
@@ -31,7 +31,7 @@ class CreateCitiesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('cities');
+		//Schema::drop('cities');
 	}
 
 }

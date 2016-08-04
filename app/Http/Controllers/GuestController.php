@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Auth;
+use Illuminate\Support\Facades\Input;
 use \App\Http\Controllers\APIController\API as API;
 class GuestController extends Controller {
 
@@ -24,6 +25,7 @@ class GuestController extends Controller {
 	public function store_detail($id)
 	{
 		$data['show'] = 1;
+		$data['id_p'] = 0;
 		$data['id_u'] = \App\Kios::find($id)['id_user'];
 		$data['bret'] = "Store";
 		$data['name'] = \App\Kios::find($id)['name'];
@@ -40,44 +42,97 @@ class GuestController extends Controller {
 		$data['kios'] = \App\Kios::find($data['deta']->id_kios);
 		return view('ads.ad')->with($data);
 	}
-	public function services()
+	public function post_search()
 	{
+		$q = Input::get('city');
+		$r = Input::get('pilar');
+		$s = Input::get('query');
+		if($s==""){
+			$s = "%";
+		}
+
+		$place = "";
+
+		if(explode("-", $q)[1]=="0"){
+			$q = explode("-", $q)[0];
+			$q = "Provinsi ".\App\Province::find($q)['nama'];
+		}else{
+			$q = explode("-", $q)[0];
+			$q = \App\City::find($q)['type']." ".\App\City::find($q)['nama'];
+		}
+
+		$pilar = \App\Pilar::find($r)['code'];
+
+		return redirect(route($pilar,[$q,$s,]));
+	}
+	public function services($place="",$where="",$price_min="",$price_max="",$make="")
+	{
+
+		if(substr($place, 0,8)=="Provinsi"){
+			$data['place'] = ($place!="")?\App\Province::where('nama',str_replace("Provinsi ","",$place))->first()['id']."-0":0;
+		}else{
+			$data['place'] = ($place!="")?\App\City::whereRaw('concat(type," ",nama)="'.$place.'"')->first()['id']."-1":0;
+		}
 		$data['show'] = 1;
 		$data['id_p'] = \App\Pilar::where('code','services_pilar')->first()['id'];
-		$data['data'] = \App\Product::where('id_pilar',\App\Pilar::where('code','services_pilar')->first()['id'])->where('status',1)->paginate(10);
+		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place,$price_min,$price_max){ if($price_min==0){$q->where('price','>=',$price_min);} if($price_max==0){$q->where('price','<=',$price_max);} if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','services_pilar')->first()['id'])->where('name','like','%'.$where.'%')->where('status',1)->paginate(10);
 		$data['name'] = "Services";
 		$data['bret'] = "Ads";
 		$data['brer'] = "pilars";
+		$data['query'] = $where;
 		return view('product.lists')->with($data);
 	}
-	public function motorcycles()
+	public function motorcycles($place="",$where="",$price_min="",$price_max="",$make="")
 	{
+		if(substr($place, 0,8)=="Provinsi"){
+			$data['place'] = ($place!="")?\App\Province::where('nama',str_replace("Provinsi ","",$place))->first()['id']."-0":0;
+		}else{
+			$data['place'] = ($place!="")?\App\City::whereRaw('concat(type," ",nama)="'.$place.'"')->first()['id']."-1":0;
+		}
 		$data['show'] = 1;
 		$data['id_p'] = \App\Pilar::where('code','motorcycles_pilar')->first()['id'];
-		$data['data'] = \App\Product::where('id_pilar',\App\Pilar::where('code','motorcycles_pilar')->first()['id'])->where('status',1)->paginate(10);
+		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place,$price_min,$price_max){ if($price_min==0){$q->where('price','>=',$price_min);} if($price_max==0){$q->where('price','<=',$price_max);} if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','motorcycles_pilar')->first()['id'])->where('name','like','%'.$where.'%')->where('status',1)->whereHas('product_categories',function($r)
+		{
+			$r->whereIn('id_kategori',array(1,8));
+			$r->whereIn('value',array(82,89));
+		})->paginate(10);
+		// dd($data['data']);
 		$data['name'] = "Motorcycles";
 		$data['bret'] = "Ads";
 		$data['brer'] = "pilars";
+		$data['query'] = $where;
 		return view('product.lists')->with($data);
 	}
-	public function cars()
+	public function cars($place="",$where="",$price_min="",$price_max="",$make="")
 	{
+		if(substr($place, 0,8)=="Provinsi"){
+			$data['place'] = ($place!="")?\App\Province::where('nama',str_replace("Provinsi ","",$place))->first()['id']."-0":0;
+		}else{
+			$data['place'] = ($place!="")?\App\City::whereRaw('concat(type," ",nama)="'.$place.'"')->first()['id']."-1":0;
+		}
 		$data['show'] = 1;
 		$data['id_p'] = \App\Pilar::where('code','cars_pilar')->first()['id'];
-		$data['data'] = \App\Product::where('id_pilar',\App\Pilar::where('code','cars_pilar')->first()['id'])->where('status',1)->paginate(10);
+		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place,$price_min,$price_max){ if($price_min==0){$q->where('price','>=',$price_min);} if($price_max==0){$q->where('price','<=',$price_max);} if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','cars_pilar')->first()['id'])->where('name','like','%'.$where.'%')->where('status',1)->paginate(10);
 		$data['name'] = "Cars";
 		$data['bret'] = "Ads";
 		$data['brer'] = "pilars";
+		$data['query'] = $where;
 		return view('product.lists')->with($data);
 	}
-	public function accessories()
+	public function accessories($place="",$where="",$price_min="",$price_max="",$make="")
 	{
+		if(substr($place, 0,8)=="Provinsi"){
+			$data['place'] = ($place!="")?\App\Province::where('nama',str_replace("Provinsi ","",$place))->first()['id']."-0":0;
+		}else{
+			$data['place'] = ($place!="")?\App\City::whereRaw('concat(type," ",nama)="'.$place.'"')->first()['id']."-1":0;
+		}
 		$data['show'] = 1;
 		$data['id_p'] = \App\Pilar::where('code','accessories_pilar')->first()['id'];
-		$data['data'] = \App\Product::where('id_pilar',\App\Pilar::where('code','accessories_pilar')->first()['id'])->where('status',1)->paginate(10);
+		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place,$price_min,$price_max){ if($price_min==0){$q->where('price','>=',$price_min);} if($price_max==0){$q->where('price','<=',$price_max);} if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','accessories_pilar')->first()['id'])->where('name','like','%'.$where.'%')->where('status',1)->paginate(10);
 		$data['name'] = "Accessories";
 		$data['bret'] = "Ads";
 		$data['brer'] = "pilars";
+		$data['query'] = $where;
 		return view('product.lists')->with($data);
 	}
 

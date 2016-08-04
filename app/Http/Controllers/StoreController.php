@@ -67,6 +67,9 @@ class StoreController extends Controller {
 				$id = $img->id;
 			}
 		}
+		$st->phone = Input::get('phone');
+		$st->bbm = Input::get('bbm');
+		$st->accept_wa = Input::get('accept_wa');
 		$st->photo = $id;
 		$st->status = 'first';
 		$st->id_user = Auth::user()->id;

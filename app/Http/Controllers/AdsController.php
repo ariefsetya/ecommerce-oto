@@ -25,6 +25,20 @@ class AdsController extends Controller {
 		$this->middleware('auth');
 	}
 
+	public function ads_home()
+	{
+		$data['num_product'] = sizeof(\App\Product::where('id_user',Auth::user()->id)->get());
+		$data['num_store'] = sizeof(\App\Kios::where('id_user',Auth::user()->id)->get());
+		$data['num_product_moderate'] = sizeof(\App\Product::where('status',0)->where('id_user',Auth::user()->id)->get());
+		$data['num_product_approved'] = sizeof(\App\Product::where('status',1)->where('id_user',Auth::user()->id)->get());
+		$data['num_product_declined'] = sizeof(\App\Product::where('status',2)->where('id_user',Auth::user()->id)->get());
+		$data['show'] = 1;
+		$data['id_u'] = Auth::user()->id;
+		$data['bret'] = "Ads";
+		$data['name'] = "Home";
+		$data['brer'] = "ads";
+		return view('ads.home')->with($data);
+	}
 	public function ads_published()
 	{
 		$data['show'] = 1;
@@ -96,6 +110,7 @@ class AdsController extends Controller {
 		$ad->description = Input::get('description');
 		$ad->id_pilar = Input::get('category');
 		$ad->pilar_addon = $addon;
+		$ad->price = str_replace(array(".",","),"",Input::get('price'));
 		$ad->id_kios = Input::get('id_kios');
 		$ad->id_user = Auth::user()->id;
 		$ad->slug = str_slug(Input::get('title'))."-".Auth::user()->id."-".uniqid();
@@ -159,6 +174,12 @@ class AdsController extends Controller {
 		$pces->id_product = $ad->id;
 		$pces->id_kategori = \App\JKategori::where('code','year')->first()['id'];
 		$pces->value = Input::get('year');
+		$pces->save();
+
+		$pces = new \App\ProductCategory;
+		$pces->id_product = $ad->id;
+		$pces->id_kategori = \App\JKategori::where('code','part')->first()['id'];
+		$pces->value = Input::get('part');
 		$pces->save();
 
 		for($i=0;$i<sizeof(Input::get('image_name'));$i++){
