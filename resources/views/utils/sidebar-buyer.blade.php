@@ -30,42 +30,20 @@
 				@endif
 				<div class="featured-ads">
 					<h2 class="sear-head fer">Featured Ads</h2>
+					@foreach(\App\Product::where('promo',2)->orderBy(\DB::raw('rand()'))->get() as $key)
 					<div class="featured-ad">
 						<a href="single.html">
 							<div class="featured-ad-left">
 								<img src="{{url('assets/images/f1.jpg')}}" title="ad image" alt="" />
 							</div>
 							<div class="featured-ad-right">
-								<h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
-								<p>$ 450</p>
+								<h4>{{$key->promotion_text}}</h4>
+								<p>{{number_format($key->new_price)}}</p>
 							</div>
 							<div class="clearfix"></div>
 						</a>
 					</div>
-					<div class="featured-ad">
-						<a href="single.html">
-							<div class="featured-ad-left">
-								<img src="{{url('assets/images/f2.jpg')}}" title="ad image" alt="" />
-							</div>
-							<div class="featured-ad-right">
-								<h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
-								<p>$ 380</p>
-							</div>
-							<div class="clearfix"></div>
-						</a>
-					</div>
-					<div class="featured-ad">
-						<a href="single.html">
-							<div class="featured-ad-left">
-								<img src="{{url('assets/images/f3.jpg')}}" title="ad image" alt="" />
-							</div>
-							<div class="featured-ad-right">
-								<h4>Lorem Ipsum is simply dummy text of the printing industry</h4>
-								<p>$ 560</p>
-							</div>
-							<div class="clearfix"></div>
-						</a>
-					</div>
+					@endforeach
 					<div class="clearfix"></div>
 				</div>
 

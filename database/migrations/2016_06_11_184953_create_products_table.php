@@ -26,6 +26,10 @@ class CreateProductsTable extends Migration {
 			$table->integer('status');
 			$table->integer('promo');
 			$table->decimal('price',65,2);
+			$table->string('promotion_type');
+			$table->decimal('discount',65,2);
+			$table->text('promotion_text');
+			$table->text('new_price');
 			$table->timestamps();
 		});
 	}

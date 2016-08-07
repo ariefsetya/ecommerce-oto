@@ -14,6 +14,16 @@ class HomeController extends Controller {
 	|
 	*/
 
+	public function logout()
+	{
+		$a = \App\User::find(Auth::user()->id);
+		$a->active_chat = "Offline";
+		$a->save();
+
+		Auth::logout();
+
+		return redirect(url('/'));
+	}
 	public function __construct()
 	{
 		$this->middleware('auth');
@@ -27,6 +37,11 @@ class HomeController extends Controller {
 		$data['data'] = \App\Kios::where('id_user',Auth::user()->id)->get();
 		
 		return view('account/home')->with($data);
+	}
+
+	public function messaging()
+	{
+		return view('messaging.message');
 	}
 
 }

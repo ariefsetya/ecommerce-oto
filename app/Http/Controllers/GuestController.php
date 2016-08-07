@@ -42,6 +42,17 @@ class GuestController extends Controller {
 		$data['kios'] = \App\Kios::find($data['deta']->id_kios);
 		return view('ads.ad')->with($data);
 	}
+	public function ads_download($id)
+	{
+		$data['deta'] = \App\Product::where('slug',$id)->first();
+		$data['name'] = $data['deta']->name;
+		$data['bret'] = \App\Kios::find(\App\Product::find($data['deta']->id)['id_kios'])['name'];
+		$data['brer'] = "store_detail";
+		$data['kios'] = \App\Kios::find($data['deta']->id_kios);
+		$pdf = \PDF::loadView('ads.download', $data);
+		return $pdf->stream();
+		return view('ads.download')->with($data);
+	}
 	public function post_search()
 	{
 		$q = Input::get('city');
@@ -91,10 +102,8 @@ class GuestController extends Controller {
 		}
 		$data['show'] = 1;
 		$data['id_p'] = \App\Pilar::where('code','motorcycles_pilar')->first()['id'];
-		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place,$price_min,$price_max){ if($price_min==0){$q->where('price','>=',$price_min);} if($price_max==0){$q->where('price','<=',$price_max);} if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','motorcycles_pilar')->first()['id'])->where('name','like','%'.$where.'%')->where('status',1)->whereHas('product_categories',function($r)
+		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place){ if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','motorcycles_pilar')->first()['id'])->where('name','like','%'.$where.'%')->where('status',1)->whereHas('product_categories',function($r)
 		{
-			$r->whereIn('id_kategori',array(1,8));
-			$r->whereIn('value',array(82,89));
 		})->paginate(10);
 		// dd($data['data']);
 		$data['name'] = "Motorcycles";

@@ -12,7 +12,7 @@
 		<div class="dalam">
 		<section class="list-left">
 		<section style="float: right;">
-		@if(Auth::check())
+		@if(Auth::check() and $show==1)
 			@if($key->id_user==Auth::user()->id)
 				<span class="cityname"><span onclick="redir('edit',{{$key->id}})" class="btn btn-success">Edit</span> <span onclick="redir('delete',{{$key->id}})" class="btn btn-success">Delete</span></span>
 			@endif

@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration {
 			$table->string('name');
 			$table->string('email')->unique();
 			$table->string('password', 60);
+			$table->string('phone');
 			$table->string('status');
 			$table->string('type');
 			$table->integer('id_province');
@@ -29,6 +30,7 @@ class CreateUsersTable extends Migration {
 			$table->integer('banner');
 			$table->integer('confirmed');
 			$table->string('code');
+			$table->string('active_chat');
 			$table->rememberToken();
 			$table->timestamps();
 		});
@@ -36,14 +38,18 @@ class CreateUsersTable extends Migration {
 		$a = new \App\User;
 		$a->name = 'Arief Setya';
 		$a->email = 'ariefsetya@live.com';
+		$a->phone = '083870002220';
 		$a->password = bcrypt('windows10');
 		$a->role = 'admin';
+		$a->active_chat = 'Offline';
 		$a->save();
 		$a = new \App\User;
 		$a->name = 'Revalinostesia';
+		$a->phone = '083870002220';
 		$a->email = 'reval@live.com';
 		$a->password = bcrypt('windows10');
 		$a->role = 'user';
+		$a->active_chat = 'Offline';
 		$a->save();
 	}
 

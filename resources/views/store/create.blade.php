@@ -45,7 +45,7 @@
 									<label><span></span></label>
 									<div class="clearfix"></div>
 									<label>BBM Pin<span></span></label>
-									<input name="bbm" type="text" required class="phone" placeholder="Your store BBM pin">
+									<input name="bbm" type="text" class="phone" placeholder="Your store BBM pin">
 									<div class="clearfix"></div>
 									<label>Description <span>*</span></label>
 									<textarea data-autoresize required name="description" rows=5 class="" placeholder="Write few lines about your store"></textarea>

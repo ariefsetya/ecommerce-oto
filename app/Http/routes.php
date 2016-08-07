@@ -17,15 +17,27 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 //cron
+
+Route::get('vauth/logout','HomeController@logout');
+
 Route::get('/', 'WelcomeController@index');
 Route::get('cronGetProvince', 'CronController@cronGetProvince');
 Route::get('cronGetCity', 'CronController@cronGetCity');
 Route::get('get_ongkir', 'GuestController@get_ongkir');
+Route::get('view_uniq', function()
+{
+	echo \Session::get('uniqid');
+});
 
 //master ajaxes
 Route::post('ajax/get_city_province_id',['as'=>'get_city_province_id','uses'=>'AjaxController@get_city_province_id']);
 Route::post('ajax/get_make_id',['as'=>'get_make_id','uses'=>'AjaxController@get_make_id']);
 Route::post('ajax/get_model_id',['as'=>'get_model_id','uses'=>'AjaxController@get_model_id']);
+Route::post('ajax/get_product_id_kios',['as'=>'get_product_id_kios','uses'=>'AjaxController@get_product_id_kios']);
+Route::post('ajax/get_product_id',['as'=>'get_product_id','uses'=>'AjaxController@get_product_id']);
+Route::post('ajax/chat_set_data',['as'=>'chat_set_data','uses'=>'AjaxController@chat_set_data']);
+Route::post('ajax/chat_send',['as'=>'chat_send','uses'=>'AjaxController@chat_send']);
+Route::post('ajax/m_chat_send',['as'=>'m_chat_send','uses'=>'AjaxController@m_chat_send']);
 
 Route::get('home', 'WelcomeController@index');
 //pilars
@@ -41,6 +53,7 @@ Route::post('post_search',['as'=>'post_search','uses'=>'GuestController@post_sea
 //account
 Route::get('account/settings', ['as'=>'account_settings','uses'=>'HomeController@account_settings']);
 Route::get('account', ['as'=>'account','uses'=>'HomeController@account']);
+Route::get('account/messaging', ['as'=>'messaging','uses'=>'HomeController@messaging']);
 
 //ads
 Route::get('ads', ['as'=>'ads','uses'=>'AdsController@ads_home']);
@@ -56,6 +69,7 @@ Route::get('ads/declined', ['as'=>'ads_declined','uses'=>'AdsController@ads_decl
 //promotions
 Route::get('promotion', ['as'=>'promotion','uses'=>'AdsController@promotion']);
 Route::get('promotion/create', ['as'=>'promotion_create','uses'=>'AdsController@promotion_create']);
+Route::post('promotion/save', ['as'=>'promotion_save','uses'=>'AdsController@promotion_save']);
 Route::get('promotion/published', ['as'=>'promotion_published','uses'=>'AdsController@promotion_published']);
 Route::get('promotion/requested', ['as'=>'promotion_requested','uses'=>'AdsController@promotion_requested']);
 Route::get('promotion/declined', ['as'=>'promotion_declined','uses'=>'AdsController@promotion_declined']);
@@ -69,3 +83,4 @@ Route::get('setup/store', ['as'=>'setup_store','uses'=>'StoreController@setup_st
 Route::post('setup/store/save', ['as'=>'setup_store_save','uses'=>'StoreController@setup_store_save']);
 
 Route::get('{ads_id}', ['as'=>'ad_detail','uses'=>'GuestController@ad_detail']);
+Route::get('{ads_id}/download', ['as'=>'ads_download','uses'=>'GuestController@ads_download']);
