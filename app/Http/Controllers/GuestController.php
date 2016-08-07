@@ -59,7 +59,7 @@ class GuestController extends Controller {
 		$r = Input::get('pilar');
 		$s = Input::get('query');
 		if($s==""){
-			$s = "%";
+			$s = "_";
 		}
 
 		$place = "";
@@ -78,6 +78,9 @@ class GuestController extends Controller {
 	}
 	public function services($place="",$where="",$price_min="",$price_max="",$make="")
 	{
+		if($where=="_"){
+			$where = "";
+		}
 
 		if(substr($place, 0,8)=="Provinsi"){
 			$data['place'] = ($place!="")?\App\Province::where('nama',str_replace("Provinsi ","",$place))->first()['id']."-0":0;
@@ -95,6 +98,9 @@ class GuestController extends Controller {
 	}
 	public function motorcycles($place="",$where="",$price_min="",$price_max="",$make="")
 	{
+		if($where=="_"){
+			$where = "";
+		}
 		if(substr($place, 0,8)=="Provinsi"){
 			$data['place'] = ($place!="")?\App\Province::where('nama',str_replace("Provinsi ","",$place))->first()['id']."-0":0;
 		}else{
@@ -114,6 +120,9 @@ class GuestController extends Controller {
 	}
 	public function cars($place="",$where="",$price_min="",$price_max="",$make="")
 	{
+		if($where=="_"){
+			$where = "";
+		}
 		if(substr($place, 0,8)=="Provinsi"){
 			$data['place'] = ($place!="")?\App\Province::where('nama',str_replace("Provinsi ","",$place))->first()['id']."-0":0;
 		}else{
@@ -130,6 +139,9 @@ class GuestController extends Controller {
 	}
 	public function accessories($place="",$where="",$price_min="",$price_max="",$make="")
 	{
+		if($where=="_"){
+			$where = "";
+		}
 		if(substr($place, 0,8)=="Provinsi"){
 			$data['place'] = ($place!="")?\App\Province::where('nama',str_replace("Provinsi ","",$place))->first()['id']."-0":0;
 		}else{
