@@ -18,7 +18,7 @@
 					<div class="flexslider">
 						<ul class="slides">
 							@foreach(\App\Image::where('code','product-'.$deta->id)->get() as $key)
-							<li data-thumb="{{url('uploads/'.$key->image)}}">
+							<li data-thumb="{{url('uploads/'.$key->image)}}" style="list-style-type: none;">
 								<img src="{{url('uploads/'.$key->image)}}" />
 							</li>
 							@endforeach
@@ -28,7 +28,7 @@
 						</ul>
 					</div>
 					<div class="product-details" style="color: #222;">
-						<p>{{$deta->description}}</p>
+						<p style="white-space: pre-wrap;">{{$deta->description}}</p>
 					</div>
 				</div>
 				<div class="col-md-4 product-details-grid">

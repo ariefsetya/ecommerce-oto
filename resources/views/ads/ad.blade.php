@@ -39,7 +39,7 @@
 						</ul>
 					</div>
 					<div class="product-details" style="color: #222;">
-						<p>{{$deta->description}}</p>
+						<p style="white-space: pre-wrap;">{{$deta->description}}</p>
 					</div>
 				</div>
 				<div class="col-md-4 product-details-grid">
