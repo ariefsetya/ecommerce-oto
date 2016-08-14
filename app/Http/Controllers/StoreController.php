@@ -25,6 +25,16 @@ class StoreController extends Controller {
 		$this->middleware('auth');
 	}
 
+	public function store()
+	{
+		$data['num_store'] = sizeof(\App\Kios::where('id_user',Auth::user()->id)->get());
+		$data['show'] = 0;
+		$data['id_u'] = Auth::user()->id;
+		$data['bret'] = "Store";
+		$data['name'] = "Home";
+		$data['brer'] = "store";
+		return view('store.home')->with($data);
+	}
 	public function store_published()
 	{
 		$data['bret'] = "Store";

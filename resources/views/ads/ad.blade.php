@@ -157,10 +157,6 @@ function ajax_set_data(key,value) {
 		}
   	});
 }
-pusher = new Pusher('5476ad624b397dfd30f3', {
-  encrypted: false
-});
-channel = pusher.subscribe('chat');
 
 @if(Auth::check())
 	nama = '{{Auth::user()->name}}';
@@ -297,7 +293,11 @@ function insertMessage() {
   	phone = msg;
   	setTimeout(function() {
   		ajax_set_data('phone',msg);
-  		robot_ask('Selamat Datang di BursaOto<br>ini adalah pesan otomatis kami, silakan tinggalkan pesan<br><br>Setelah itu kami akan segera menghubungi Anda melalui telepon atau email :)');
+  		if('{{\App\User::find($kios->id_user)['active_chat']}}'=='Offline'){
+  			robot_ask('Selamat Datang di BursaOto<br>ini adalah pesan otomatis kami, silakan tinggalkan pesan<br><br>Setelah itu kami akan segera menghubungi Anda melalui telepon atau email :)');
+  		}else{
+  			robot_ask('Selamat Datang di BursaOto<br>Ada yang bisa kami bantu?');
+  		}
   	},1000);
   }else{
   	$.ajax({
