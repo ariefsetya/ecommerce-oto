@@ -49,6 +49,7 @@ Route::get('accessories/{q?}/{r?}/{s?}/{t?}/{u?}', ['as'=>'accessories_pilar','u
 Route::get('store/detail/{id}', ['as'=>'store_detail','uses'=>'GuestController@store_detail']);
 
 Route::post('post_search',['as'=>'post_search','uses'=>'GuestController@post_search']);
+Route::post('parseURI',['as'=>'parseURI','uses'=>'GuestController@parseURI']);
 
 //account
 Route::get('account/settings', ['as'=>'account_settings','uses'=>'HomeController@account_settings']);

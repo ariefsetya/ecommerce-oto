@@ -80,6 +80,7 @@
 	$( "#amount" ).val( rupiah($( "#slider-range" ).slider( "values", 0 )) + " - " + rupiah($( "#slider-range" ).slider( "values", 1 )) );
 
 	});//]]>    
+
 function rupiah(value)
   {
   value += '';

@@ -232,7 +232,7 @@ class AdsController extends Controller {
 		$a->discount = str_replace(array('.',','), "", Input::get('price'));
 		}
 		$a->promotion_text = Input::get('promotion_text');
-		$a->new_price = Input::get('new_price');
+		$a->new_price = str_replace(array(".",","),"",Input::get('new_price'));
 		$a->save();
 
 		return redirect(route('promotion'));

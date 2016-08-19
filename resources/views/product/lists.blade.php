@@ -25,7 +25,7 @@
 					<div class="search">
 						<div id="custom-search-input">
 						<div class="input-group">
-							<input type="text" class="form-control input-lg" placeholder="Buscar" name="query" value="{{($query=="%")?"":$query}}" />
+							<input type="text" class="form-control input-lg" placeholder="Buscar" name="query" id="query" value="{{($query=="%")?"":$query}}" />
 							<span class="input-group-btn">
 								<button class="btn btn-info btn-lg" type="submit">
 									<i class="glyphicon glyphicon-search"></i>
@@ -68,12 +68,17 @@
 				min: 10000,
 				max: 100000000,
 				values: [ 30000, 80000000 ],
-				slide: function( event, ui ) {  $( "#amount" ).val(rupiah(ui.values[ 0 ]) + " - " + rupiah(ui.values[ 1 ]));
+				slide: function( event, ui ) {  
+					$( "#amount" ).val(rupiah(ui.values[ 0 ]) + " - " + rupiah(ui.values[ 1 ]));
+					parseURI();
 				}
 	 });
 	$( "#amount" ).val( rupiah($( "#slider-range" ).slider( "values", 0 )) + " - " + rupiah($( "#slider-range" ).slider( "values", 1 )));
 
 	});//]]>
+
+
+
 function rupiah(value)
   {
   value += '';
@@ -87,6 +92,43 @@ function rupiah(value)
   return 'Rp ' + x1 + x2;
   }
 
+var ixx = 0;
+  function parseURI() {
+  	setTimeout(function(){
+  		if(ixx==0){
+		  	$.ajax({
+		  		url:'{{route('parseURI')}}',
+		  		data:{
+		  				pilar:$("#pilar").val(),
+		  				city:$("#city").val(),
+		  				query:$("#query").val(),
+		  				min_price:$( "#slider-range" ).slider( "values", 0 ),
+		  				max_price:$( "#slider-range" ).slider( "values", 1 ),
+		  				make:$("#make").val(),
+		  				_token:'{{csrf_token()}}'
+		  			},
+		  		type:'POST',
+		  		dataType:'json',
+		  		success:function(response) {
+		  			window.history.pushState({}, '', response.url);
+		  		}
+		  	});
+		}
+		ixx++;
+  	},2000);
+
+  	setTimeout(function() {
+  		ixx=0;
+  	},2005);
+  }
+
+
+  $("#pilar,#city,#make").on('change',function() {
+  	parseURI();
+  });
+  $("#query").on('input',function() {
+  	parseURI();
+  });
 
 	</script>
 @endsection

@@ -29,7 +29,7 @@ class AjaxController extends Controller {
 	}
 	public function get_product_id_kios()
 	{
-		$a = \App\Product::where('id_kios',Input::get('id_kios'))->where('status',1)->get();
+		$a = \App\Product::where('id_kios',Input::get('id_kios'))->where('status',1)->where('promo',0)->get();
 		if(sizeof($a)==0){
 			echo json_encode(array(array('id'=>"",'name'=>'No Product')));
 		}else{

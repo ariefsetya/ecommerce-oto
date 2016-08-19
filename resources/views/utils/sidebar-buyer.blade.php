@@ -20,7 +20,7 @@
 				</div>
 				<div class="brand-select">
 					<h3 class="sear-head">Make</h3>
-					  <select class="selectpicker" data-live-search="true">
+					  <select class="selectpicker" data-live-search="true" id="make">
 					  <option data-tokens="All" value="All">All</option>
 						@foreach(\App\Kategori::where('id_jenis',\App\JKategori::where('code','make')->first()['id'])->whereIn('id_induk',$id_p<3?array($id_p):array(1,2))->get() as $key)
 					  <option data-tokens="{{$key->id}}" value="{{$key->id}}">{{$key->name}}</option>
@@ -32,13 +32,17 @@
 					<h2 class="sear-head fer">Featured Ads</h2>
 					@foreach(\App\Product::where('promo',2)->orderBy(\DB::raw('rand()'))->get() as $key)
 					<div class="featured-ad">
-						<a href="single.html">
+						<a href="{{route('ad_detail',$key->slug)}}">
 							<div class="featured-ad-left">
-								<img src="{{url('assets/images/f1.jpg')}}" title="ad image" alt="" />
+							@if(sizeof(\App\Image::where('code','product-'.$key->id)->get())==0)
+							<img src="{{url('img-uploader/src/img/icon_add_image2.png')}}" title="" alt="" />
+							@else
+							<img src="{{url('uploads/'.\App\Image::where('code','product-'.$key->id)->first()['image'])}}" title="" alt="" />
+							@endif	
 							</div>
 							<div class="featured-ad-right">
 								<h4>{{$key->promotion_text}}</h4>
-								<p>{{number_format($key->new_price)}}</p>
+								<p>Rp. {{number_format($key->new_price)}}<br><span style="font-size: 8pt;">{{($key->promotion_type=="nominal"?"Rp. ":"").number_format($key->discount).($key->promotion_type=="percent"?"%":"")}} OFF</span></p>
 							</div>
 							<div class="clearfix"></div>
 						</a>

@@ -74,7 +74,42 @@ class GuestController extends Controller {
 
 		$pilar = \App\Pilar::find($r)['code'];
 
-		return redirect(route($pilar,[$q,$s,]));
+		return redirect(route($pilar,[$q,$s]));
+	}	
+	public function parseURI()
+	{
+		$q = Input::get('city');
+		$r = Input::get('pilar');
+		$s = Input::get('query');
+		if($s==""){
+			$s = "_";
+		}
+
+		$place = "";
+
+		if(explode("-", $q)[1]=="0"){
+			$q = explode("-", $q)[0];
+			$q = "Provinsi ".\App\Province::find($q)['nama'];
+		}else{
+			$q = explode("-", $q)[0];
+			$q = \App\City::find($q)['type']." ".\App\City::find($q)['nama'];
+		}
+
+		$pilar = \App\Pilar::find($r)['code'];
+
+		$price_min = Input::get('min_price');
+		$t = (int)$price_min;
+		$price_max = Input::get('max_price');
+		$u = (int)$price_max;
+
+		$make = Input::get('make');
+		$v = \App\Kategori::where('id_jenis',\App\JKategori::where('code','make')->first()['id'])->where('id',$make)->first()['name'];
+
+		if($make=="All"){
+			$v = '_'; 
+		}
+
+		echo json_encode(array("url"=>route($pilar,[$q,$s,$t,$u,$v])));
 	}
 	public function services($place="",$where="",$price_min="",$price_max="",$make="")
 	{
@@ -108,8 +143,21 @@ class GuestController extends Controller {
 		}
 		$data['show'] = 1;
 		$data['id_p'] = \App\Pilar::where('code','motorcycles_pilar')->first()['id'];
-		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place){ if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','motorcycles_pilar')->first()['id'])->where('name','like','%'.$where.'%')->where('status',1)->whereHas('product_categories',function($r)
+		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place){ if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','motorcycles_pilar')->first()['id'])->where('status',1)->whereHas('product_categories',function($r)
 		{
+		})->where(function($q) use ($where,$price_min,$price_max)
+		{
+			if($where!="_"){
+				$q->where('name','like','%'.$where.'%');
+			}	
+			if($price_min>0){
+				$q->where('price','>=','%'.$price_min.'%');
+				$q->orWhere('new_price','>=','%'.$price_min.'%');
+			}
+			if($price_max>0){
+				$q->where('price','<=','%'.$price_max.'%');
+				$q->orWhere('new_price','<=','%'.$price_max.'%');
+			}
 		})->paginate(10);
 		// dd($data['data']);
 		$data['name'] = "Motorcycles";

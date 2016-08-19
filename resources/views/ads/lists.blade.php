@@ -49,19 +49,21 @@
 @endsection
 
 @section('footer')
-	<script type='text/javascript'>//<![CDATA[ 
+	<script type='text/javascript'>
 	$(window).load(function(){
 	 $( "#slider-range" ).slider({
 				range: true,
 				min: 100000,
 				max: 10000000,
 				values: [ 200000, 8000000 ],
-				slide: function( event, ui ) {  $( "#amount" ).val(rupiah(ui.values[ 0 ]) + " - " + rupiah(ui.values[ 1 ]) );
+				slide: function( event, ui ) {  
+					$( "#amount" ).val(rupiah(ui.values[ 0 ]) + " - " + rupiah(ui.values[ 1 ]) );
+					//window.history.pushState({"html":'response.html',"pageTitle":'response.pageTitle'}, '', '/'+$("#pilar").val()+'/'+$("#city").val()+'/');
 				}
 	 });
-	$( "#amount" ).val( rupiah($( "#slider-range" ).slider( "values", 0 )) + " - " + rupiah($( "#slider-range" ).slider( "values", 1 )) );
+		$("#amount").val( rupiah($( "#slider-range" ).slider( "values", 0 )) + " - " + rupiah($( "#slider-range" ).slider( "values", 1 )) );
 
-	});//]]>    
+	});
 function rupiah(value)
   {
   value += '';

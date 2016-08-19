@@ -23,7 +23,11 @@
 		<span class="catpath">{{\App\Pilar::find($key->id_pilar)['name']}} » {{\App\Kategori::find(\App\ProductCategory::where('id_product',$key->id)->where('id_kategori',\App\JKategori::where('code','make')->first()['id'])->first()['value'])['name']}}</span>
 		</section>
 		<section class="list-right">
-		<span class="adprice">Rp. {{number_format($key->price,2)}}</span>
+		<span class="adprice"> @if($key->promo==2) <span style="text-decoration: line-through;font-size: 9pt;"> Rp. {{number_format($key->price)}}</span> <span style="font-size: 9pt;color:red;">{{($key->promotion_type=="nominal"?"Rp. ":"").number_format($key->discount).($key->promotion_type=="percent"?"%":"")}} OFF</span> @else {{"Rp. ".number_format($key->price,0)}} @endif
+		@if($key->promo==2)
+		<br>Rp. {{number_format($key->new_price)}}
+		@endif
+		</span>
 		<span class="catpath">Posted at {{date_format(date_create($key->created_at),"D, d M Y H:i:s")}}</span>
 		</section>
 		</div>
