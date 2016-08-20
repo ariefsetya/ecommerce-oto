@@ -29,99 +29,35 @@
         </div>
       </div>
 
-      @if(sizeof(\App\Product::where('promo',1)->get())>0)
+      @if(sizeof(\App\Product::where('promo',2)->get())>0)
       <div class="trending-ads">
         <div class="container">
 
         <div class="trend-ads">
           <h2>{{\App\Appconfig::where('key','body_heading')->first()['value']}}</h2>
               <ul id="flexiselDemo3">
-              {{"@foreach(\App\Popular::orderBy('id','desc')->get() as %key)"}}
                 <li>
+              <?php $i=0;?>
+              @foreach(\App\Product::where('promo',2)->orderByRaw('RAND()')->get() as $key)
                   <div class="col-md-3 biseller-column">
-                    <a href="single.html">
-                      <img src="{{url('assets/images/bk10.jpg')}}"/>
-                      <span class="price">Rp. 100.000.000,00</span>
+                    <a href="{{$key->slug}}">
+                      @if(sizeof(\App\Image::where('code','product-'.$key->id)->get())==0)
+                      <img src="{{url('img-uploader/src/img/icon_add_image2.png')}}" title="" alt="" />
+                      @else
+                      <img src="{{url('uploads/'.\App\Image::where('code','product-'.$key->id)->first()['image'])}}" title="" alt="" />
+                      @endif  
+                      <span class="price"><span style="font-size: 8pt;">{{($key->promotion_type=="nominal"?"Rp. ":"").number_format($key->discount).($key->promotion_type=="percent"?"%":"")}} OFF</span><br>Rp. {{number_format($key->new_price,0)}}</span>
                     </a>
                     <div class="ad-info">
-                      <h5>There are many variations of passages</h5>
-                      <span>1 hour ago</span>
+                      <h5>{{$key->promotion_text}}</h5>
                     </div>
                   </div>
-                  <div class="col-md-3 biseller-column">
-                    <a href="single.html">
-                      <img src="{{url('assets/images/c4.jpg')}}"/>
-                      <span class="price">&#36; 399</span>
-                    </a>
-                    <div class="ad-info">
-                      <h5>Lorem Ipsum is simply dummy</h5>
-                      <span>3 hour ago</span>
-                    </div>
-                  </div>
-                  <div class="col-md-3 biseller-column">
-                    <a href="single.html">
-                      <img src="{{url('assets/images/bk3.jpg')}}"/>
-                      <span class="price">&#36; 199</span>
-                    </a>
-                    <div class="ad-info">
-                      <h5>It is a long established fact that a reader</h5>
-                      <span>8 hour ago</span>
-                    </div>
-                  </div>
-                  <div class="col-md-3 biseller-column">
-                    <a href="single.html">
-                      <img src="{{url('assets/images/c8.jpg')}}"/>
-                      <span class="price">&#36; 159</span>
-                    </a>
-                    <div class="ad-info">
-                      <h5>passage of Lorem Ipsum you need to be</h5>
-                      <span>19 hour ago</span>
-                    </div>
-                  </div>
+                @if($i%4==0)
                 </li>
                 <li>
-                  <div class="col-md-3 biseller-column">
-                    <a href="single.html">
-                      <img src="{{url('assets/images/bk5.jpg')}}"/>
-                      <span class="price">Rp. 100.000,00</span>
-                    </a>
-                    <div class="ad-info">
-                      <h5>There are many variations of passages</h5>
-                      <span>1 hour ago</span>
-                    </div>
-                  </div>
-                  <div class="col-md-3 biseller-column">
-                    <a href="single.html">
-                      <img src="{{url('assets/images/c2.jpg')}}"/>
-                      <span class="price">&#36; 399</span>
-                    </a>
-                    <div class="ad-info">
-                      <h5>Lorem Ipsum is simply dummy</h5>
-                      <span>3 hour ago</span>
-                    </div>
-                  </div>
-                  <div class="col-md-3 biseller-column">
-                    <a href="single.html">
-                      <img src="{{url('assets/images/c6.jpg')}}"/>
-                      <span class="price">&#36; 199</span>
-                    </a>
-                    <div class="ad-info">
-                      <h5>It is a long established fact that a reader</h5>
-                      <span>8 hour ago</span>
-                    </div>
-                  </div>
-                  <div class="col-md-3 biseller-column">
-                    <a href="single.html">
-                      <img src="{{url('assets/images/bk7.jpg')}}"/>
-                      <span class="price">&#36; 159</span>
-                    </a>
-                    <div class="ad-info">
-                      <h5>passage of Lorem Ipsum you need to be</h5>
-                      <span>19 hour ago</span>
-                    </div>
-                  </div>
+                @endif
+                @endforeach
                 </li>
-                {{"@endforeach"}}
             </ul>
           <script type="text/javascript">
              $(window).load(function() {

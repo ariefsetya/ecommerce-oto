@@ -27,7 +27,7 @@ class AdsController extends Controller {
 
 	public function ads_home()
 	{
-		$data['num_product'] = sizeof(\App\Product::where('id_user',Auth::user()->id)->get());
+		$data['num_product'] = sizeof(\App\Product::where('id_user',Auth::user()->id)->whereIn('status',array(0,1,2,3))->get());
 		$data['num_store'] = sizeof(\App\Kios::where('id_user',Auth::user()->id)->get());
 		$data['num_product_moderate'] = sizeof(\App\Product::where('status',0)->where('id_user',Auth::user()->id)->get());
 		$data['num_product_approved'] = sizeof(\App\Product::where('status',1)->where('id_user',Auth::user()->id)->get());
@@ -125,7 +125,8 @@ class AdsController extends Controller {
 		$ad->description = Input::get('description');
 		$ad->id_pilar = Input::get('category');
 		$ad->pilar_addon = $addon;
-		$ad->price = str_replace(array(".",","),"",Input::get('price'));
+		$ad->price = str_replace(array(".",",","Rp"),"",Input::get('price'));
+		$ad->new_price = str_replace(array(".",",","Rp"),"",Input::get('price'));
 		$ad->id_kios = Input::get('id_kios');
 		$ad->id_user = Auth::user()->id;
 		$ad->slug = str_slug(Input::get('title'))."-".Auth::user()->id."-".uniqid();
@@ -211,7 +212,7 @@ class AdsController extends Controller {
 			}
 		}
 
-		return redirect(route('ads_moderation'));
+		return redirect(route('ads'));
 	}
 	public function ads_delete($value)
 	{

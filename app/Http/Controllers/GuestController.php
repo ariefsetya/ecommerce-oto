@@ -22,6 +22,11 @@ class GuestController extends Controller {
 	 * @return Response
 	 */
 
+	public function pilars()
+	{
+		$data['pilar'] = \App\Pilar::all();
+		return view('ads.pilars')->with($data);
+	}
 	public function store_detail($id)
 	{
 		$data['show'] = 1;
@@ -109,12 +114,22 @@ class GuestController extends Controller {
 			$v = '_'; 
 		}
 
-		echo json_encode(array("url"=>route($pilar,[$q,$s,$t,$u,$v])));
+		$postable = $this->postable($pilar,$q,$s,$t,$u,$v);
+		$html = $postable['html'];
+		$data = $postable['data'];
+
+		echo json_encode(array("url"=>route($pilar,[$q,$s,$t,$u,$v]),'html'=>$html,'data'=>$data));
 	}
 	public function services($place="",$where="",$price_min="",$price_max="",$make="")
 	{
 		if($where=="_"){
 			$where = "";
+		}
+		if($make==""){
+			$make = "_";
+		}
+		if($make !="_"){
+			$make = \App\Kategori::where('name',$make)->first()['id'];
 		}
 
 		if(substr($place, 0,8)=="Provinsi"){
@@ -123,16 +138,38 @@ class GuestController extends Controller {
 			$data['place'] = ($place!="")?\App\City::whereRaw('concat(type," ",nama)="'.$place.'"')->first()['id']."-1":0;
 		}
 		$data['show'] = 1;
+		$data['make'] = $make;
+		$data['price_min'] = $price_min;
+		$data['price_max'] = $price_max;
 		$data['id_p'] = \App\Pilar::where('code','services_pilar')->first()['id'];
-		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place,$price_min,$price_max){ if($price_min==0){$q->where('price','>=',$price_min);} if($price_max==0){$q->where('price','<=',$price_max);} if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','services_pilar')->first()['id'])->where('name','like','%'.$where.'%')->where('status',1)->paginate(10);
+		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place){ if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','services_pilar')->first()['id'])->where('status',1)->whereHas('product_categories',function($r) use ($make)
+		{	
+			if($make!="_"){
+				$r->where('id_kategori',\App\JKategori::where('code','make')->first()['id']);
+				$r->where('value',$make);
+			}	
+		})->where(function($q) use ($where,$price_min,$price_max)
+		{
+			if($where!="_"){
+				$q->where('name','like','%'.$where.'%');
+			}	
+			if($price_min>0 and $price_max > 0){
+				$q->whereRaw('new_price BETWEEN '.$price_min.' AND '.$price_max);
+			}
+		})->paginate(10);	
 		$data['name'] = "Services";
 		$data['bret'] = "Ads";
 		$data['brer'] = "pilars";
 		$data['query'] = $where;
 		return view('product.lists')->with($data);
 	}
-	public function motorcycles($place="",$where="",$price_min="",$price_max="",$make="")
+	public function postable($pilar="",$place="",$where="",$price_min=0,$price_max=0,$make="")
 	{
+		//dd(array($pilar,$place,$where,$price_min,$price_max,$make));
+		$pilar = \App\Pilar::where('code',$pilar)->first()['id'];
+		if($make !="_"){
+			$make = \App\Kategori::where('name',$make)->first()['id'];
+		}
 		if($where=="_"){
 			$where = "";
 		}
@@ -142,24 +179,65 @@ class GuestController extends Controller {
 			$data['place'] = ($place!="")?\App\City::whereRaw('concat(type," ",nama)="'.$place.'"')->first()['id']."-1":0;
 		}
 		$data['show'] = 1;
-		$data['id_p'] = \App\Pilar::where('code','motorcycles_pilar')->first()['id'];
-		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place){ if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','motorcycles_pilar')->first()['id'])->where('status',1)->whereHas('product_categories',function($r)
+		$data['id_p'] = $pilar;
+		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place){ if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',$pilar)->where('status',1)->whereHas('product_categories',function($r) use ($make)
 		{
+			if($make!="_"){
+				$r->where('id_kategori',\App\JKategori::where('code','make')->first()['id']);
+				$r->where('value',$make);
+			}	
 		})->where(function($q) use ($where,$price_min,$price_max)
 		{
 			if($where!="_"){
 				$q->where('name','like','%'.$where.'%');
 			}	
-			if($price_min>0){
-				$q->where('price','>=','%'.$price_min.'%');
-				$q->orWhere('new_price','>=','%'.$price_min.'%');
-			}
-			if($price_max>0){
-				$q->where('price','<=','%'.$price_max.'%');
-				$q->orWhere('new_price','<=','%'.$price_max.'%');
+			if($price_min>0 and $price_max > 0){
+				$q->whereRaw('new_price BETWEEN '.$price_min.' AND '.$price_max);
 			}
 		})->paginate(10);
-		// dd($data['data']);
+		// dd($data);
+		$data['name'] = "Services";
+		$data['bret'] = "Ads";
+		$data['brer'] = "pilars";
+		$data['query'] = $where;
+		return array('html'=>view('product.listsable')->with($data)->render(),'data'=>sizeof($data['data']));
+	}
+	public function motorcycles($place="",$where="",$price_min="",$price_max="",$make="")
+	{
+		if($where=="_"){
+			$where = "";
+		}
+		if($make==""){
+			$make = "_";
+		}
+		if($make !="_"){
+			$make = \App\Kategori::where('name',$make)->first()['id'];
+		}
+		if(substr($place, 0,8)=="Provinsi"){
+			$data['place'] = ($place!="")?\App\Province::where('nama',str_replace("Provinsi ","",$place))->first()['id']."-0":0;
+		}else{
+			$data['place'] = ($place!="")?\App\City::whereRaw('concat(type," ",nama)="'.$place.'"')->first()['id']."-1":0;
+		}
+		$data['show'] = 1;
+		$data['make'] = $make;
+		$data['price_min'] = $price_min;
+		$data['price_max'] = $price_max;
+		$data['id_p'] = \App\Pilar::where('code','motorcycles_pilar')->first()['id'];
+		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place){ if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','motorcycles_pilar')->first()['id'])->where('status',1)->whereHas('product_categories',function($r) use ($make)
+		{	
+			if($make!="_"){
+				$r->where('id_kategori',\App\JKategori::where('code','make')->first()['id']);
+				$r->where('value',$make);
+			}	
+		})->where(function($q) use ($where,$price_min,$price_max)
+		{
+			if($where!="_"){
+				$q->where('name','like','%'.$where.'%');
+			}	
+			if($price_min>0 and $price_max > 0){
+				$q->whereRaw('new_price BETWEEN '.$price_min.' AND '.$price_max);
+			}
+		})->paginate(10);
 		$data['name'] = "Motorcycles";
 		$data['bret'] = "Ads";
 		$data['brer'] = "pilars";
@@ -171,14 +249,37 @@ class GuestController extends Controller {
 		if($where=="_"){
 			$where = "";
 		}
+		if($make==""){
+			$make = "_";
+		}
+		if($make !="_"){
+			$make = \App\Kategori::where('name',$make)->first()['id'];
+		}
 		if(substr($place, 0,8)=="Provinsi"){
 			$data['place'] = ($place!="")?\App\Province::where('nama',str_replace("Provinsi ","",$place))->first()['id']."-0":0;
 		}else{
 			$data['place'] = ($place!="")?\App\City::whereRaw('concat(type," ",nama)="'.$place.'"')->first()['id']."-1":0;
 		}
 		$data['show'] = 1;
+		$data['make'] = $make;
+		$data['price_min'] = $price_min;
+		$data['price_max'] = $price_max;
 		$data['id_p'] = \App\Pilar::where('code','cars_pilar')->first()['id'];
-		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place,$price_min,$price_max){ if($price_min==0){$q->where('price','>=',$price_min);} if($price_max==0){$q->where('price','<=',$price_max);} if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','cars_pilar')->first()['id'])->where('name','like','%'.$where.'%')->where('status',1)->paginate(10);
+		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place){ if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','cars_pilar')->first()['id'])->where('status',1)->whereHas('product_categories',function($r) use ($make)
+		{	
+			if($make!="_"){
+				$r->where('id_kategori',\App\JKategori::where('code','make')->first()['id']);
+				$r->where('value',$make);
+			}	
+		})->where(function($q) use ($where,$price_min,$price_max)
+		{
+			if($where!="_"){
+				$q->where('name','like','%'.$where.'%');
+			}	
+			if($price_min>0 and $price_max > 0){
+				$q->whereRaw('new_price BETWEEN '.$price_min.' AND '.$price_max);
+			}
+		})->paginate(10);		
 		$data['name'] = "Cars";
 		$data['bret'] = "Ads";
 		$data['brer'] = "pilars";
@@ -190,14 +291,37 @@ class GuestController extends Controller {
 		if($where=="_"){
 			$where = "";
 		}
+		if($make==""){
+			$make = "_";
+		}
+		if($make !="_"){
+			$make = \App\Kategori::where('name',$make)->first()['id'];
+		}
 		if(substr($place, 0,8)=="Provinsi"){
 			$data['place'] = ($place!="")?\App\Province::where('nama',str_replace("Provinsi ","",$place))->first()['id']."-0":0;
 		}else{
 			$data['place'] = ($place!="")?\App\City::whereRaw('concat(type," ",nama)="'.$place.'"')->first()['id']."-1":0;
 		}
 		$data['show'] = 1;
+		$data['make'] = $make;
+		$data['price_min'] = $price_min;
+		$data['price_max'] = $price_max;
 		$data['id_p'] = \App\Pilar::where('code','accessories_pilar')->first()['id'];
-		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place,$price_min,$price_max){ if($price_min==0){$q->where('price','>=',$price_min);} if($price_max==0){$q->where('price','<=',$price_max);} if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','accessories_pilar')->first()['id'])->where('name','like','%'.$where.'%')->where('status',1)->paginate(10);
+		$data['data'] = \App\Product::with(['kios','product_categories'])->whereHas('kios',function($q) use ($data,$place){ if($place!=""){if(explode('-',$data['place'])[1]=="0"){$q->where('id_province',explode("-",$data['place'])[0]);}else{$q->where('id_city',explode("-",$data['place'])[0]);}}})->where('id_pilar',\App\Pilar::where('code','accessories_pilar')->first()['id'])->where('status',1)->whereHas('product_categories',function($r) use ($make)
+		{	
+			if($make!="_"){
+				$r->where('id_kategori',\App\JKategori::where('code','make')->first()['id']);
+				$r->where('value',$make);
+			}	
+		})->where(function($q) use ($where,$price_min,$price_max)
+		{
+			if($where!="_"){
+				$q->where('name','like','%'.$where.'%');
+			}	
+			if($price_min>0 and $price_max > 0){
+				$q->whereRaw('new_price BETWEEN '.$price_min.' AND '.$price_max);
+			}
+		})->paginate(10);	
 		$data['name'] = "Accessories";
 		$data['bret'] = "Ads";
 		$data['brer'] = "pilars";

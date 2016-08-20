@@ -33,7 +33,7 @@ class HomeController extends Controller {
 	{
 		$data['name'] = "Account";
 		$data['num_store'] = sizeof(\App\Kios::where('id_user',Auth::user()->id)->get());
-		$data['num_product'] = sizeof(\App\Product::where('id_user',Auth::user()->id)->get());
+		$data['num_product'] = sizeof(\App\Product::where('id_user',Auth::user()->id)->whereIn('status',array(0,1,2,3))->get());
 		$data['data'] = \App\Kios::where('id_user',Auth::user()->id)->get();
 		
 		return view('account/home')->with($data);

@@ -21,9 +21,9 @@
 				<div class="brand-select">
 					<h3 class="sear-head">Make</h3>
 					  <select class="selectpicker" data-live-search="true" id="make">
-					  <option data-tokens="All" value="All">All</option>
+					  	<option data-tokens="All" value="All">All</option>
 						@foreach(\App\Kategori::where('id_jenis',\App\JKategori::where('code','make')->first()['id'])->whereIn('id_induk',$id_p<3?array($id_p):array(1,2))->get() as $key)
-					  <option data-tokens="{{$key->id}}" value="{{$key->id}}">{{$key->name}}</option>
+					  	<option {{$make==$key->id?"selected":""}} data-tokens="{{$key->id}}" value="{{$key->id}}">{{$key->name}}</option>
 						@endforeach
 					</select>
 				</div>

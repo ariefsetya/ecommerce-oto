@@ -46,7 +46,11 @@
 					<div class="item-price">
 						<div class="product-price">
 							<p class="p-price">Price</p>
-							<h4 class="rate">Rp. {{number_format($deta->price,2)}}</h4>
+							<h4 class="rate"> @if($deta->promo==2) <span style="text-decoration: line-through;font-size: 9pt;"> Rp. {{number_format($deta->price)}}</span> <span style="font-size: 9pt;color:red;">{{($deta->promotion_type=="nominal"?"Rp. ":"").number_format($deta->discount).($deta->promotion_type=="percent"?"%":"")}} OFF</span> @else {{"Rp. ".number_format($deta->price,0)}} @endif
+								@if($deta->promo==2)
+								<br>Rp. {{number_format($deta->new_price)}}
+								@endif
+							</h4>
 							<div class="clearfix"></div>
 						</div>
 						<div class="condition">

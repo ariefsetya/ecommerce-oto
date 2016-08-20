@@ -62,12 +62,10 @@ class AjaxController extends Controller {
 			$options
 		);
 
-
-
+		$data['datetime'] = date("Y-m-d H:i:s");
 		$data['pesan'] = Input::get('pesan');
 		$data['uniqid'] = \Session::get('uniqid');
 		$data['mova'] = Input::get('mova');
-		$pusher->trigger('chat', 'chat_z_'.Input::get('to'), $data);
 
 		$x = new \App\Chat;
 		$x->id_user = 0;
@@ -84,6 +82,9 @@ class AjaxController extends Controller {
 		$x->to = $data['mova'];
 		$x->message = $data['pesan'];
 		$x->save();
+		
+		$data['user'] = $x->tmp_name;
+		$pusher->trigger('chat', 'chat_z_'.Input::get('to'), $data);
 
 	}
 	public function m_chat_send()

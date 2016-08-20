@@ -127,7 +127,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </ul>
           </div>
           <div class="copyrights">
-            <p> &copy; 2016 Resale. All Rights Reserved | Design by  <a href="http://w3layouts.com/"> W3layouts</a></p>
+            <p> &copy; {{date("Y")}} BursaOto. All Rights Reserved | Design by  <a href="http://w3layouts.com/"> W3layouts</a></p>
           </div>
           <div class="clearfix"></div>
         </div>

@@ -98,6 +98,9 @@
 									<label>Ad Title <span>*</span></label>
 									<input name="title" id="title" type="text" readonly required class="phone" placeholder="">
 									<div class="clearfix"></div>
+									<label>Price <span>*</span></label>
+									<input name="price" value="{{number_format($deta->price,0)}}" id="price" oninput="change_price()" type="text" class="" placeholder="">
+									<div class="clearfix"></div>
 									<label>Ad Description <span>*</span></label>
 									<textarea rows="4" data-autoresize name="description" required class="mess" placeholder="Write few lines about your product">{{$deta->description}}</textarea>
 									<div class="clearfix"></div>
@@ -157,6 +160,13 @@
 
 	<script src="{{url('img-uploader/src/jquery.picture.cut.js')}}"></script>
 	<script type="text/javascript">
+			$('#price').priceFormat({
+	    prefix: 'Rp',
+	    centsSeparator: ',',
+	    thousandsSeparator: '.',
+    	clearPrefix: true,
+    	centsLimit: 0
+	});
 	//alert({{\App\ProductCategory::where('id_kategori',\App\JKategori::where('code','year')->first()['id'])->where('id_product',$deta->id)->first()['value']}});
 	var make_id={{\App\ProductCategory::where('id_kategori',\App\JKategori::where('code','make')->first()['id'])->where('id_product',$deta->id)->first()['value']}};
 	var model_id={{\App\ProductCategory::where('id_kategori',\App\JKategori::where('code','model')->first()['id'])->where('id_product',$deta->id)->first()['value']}};

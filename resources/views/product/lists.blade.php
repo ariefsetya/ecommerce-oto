@@ -51,6 +51,9 @@
 						<div id="container">
 							<div class="clearfix"></div>
 							@include('utils.ads-list')
+							@if(sizeof($data)==0)
+								<h1>Oops</h1><p>No ads found</p>
+							@endif
 					  	</div>
 					</div>
 				</div>
@@ -58,6 +61,94 @@
 			</div>
 		</div>
 	</div>
+	<div class="sk-cube-grid">
+  <div class="sk-cube sk-cube1"></div>
+  <div class="sk-cube sk-cube2"></div>
+  <div class="sk-cube sk-cube3"></div>
+  <div class="sk-cube sk-cube4"></div>
+  <div class="sk-cube sk-cube5"></div>
+  <div class="sk-cube sk-cube6"></div>
+  <div class="sk-cube sk-cube7"></div>
+  <div class="sk-cube sk-cube8"></div>
+  <div class="sk-cube sk-cube9"></div>
+</div>
+<style type="text/css">
+	.sk-cube-grid {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+	left:50%;
+	top: 120%;
+	z-index: 99999;
+	opacity: 0;
+	transition: all .2s;
+}
+
+.sk-cube-grid .sk-cube {
+	padding: 10px;
+  width: 33%;
+  height: 33%;
+  float: left;
+  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+          animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
+}
+.sk-cube-grid .sk-cube1 {
+  background-color: #87CEFA;
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube2 {
+  background-color: #87CEEB;
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube3 {
+  background-color: #00BFFF;
+  -webkit-animation-delay: 0.4s;
+          animation-delay: 0.4s; }
+.sk-cube-grid .sk-cube4 {
+  background-color: #1E90FF;
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube5 {
+  background-color: #6495ED;
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube6 {
+  background-color: #4682B4;
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube7 {
+  background-color: #7B68EE;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s; }
+.sk-cube-grid .sk-cube8 {
+  background-color: #6A5ACD;
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube9 {
+  background-color: #4169E1;
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+  } 35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1); 
+  }
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+  } 35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1);
+  } 
+}
+</style>
 @endsection
 
 @section('footer')
@@ -67,7 +158,7 @@
 				range: true,
 				min: 10000,
 				max: 100000000,
-				values: [ 30000, 80000000 ],
+				values: [ {{$price_min>0?$price_min:30000}}, {{$price_max>0?$price_max:80000000}} ],
 				slide: function( event, ui ) {  
 					$( "#amount" ).val(rupiah(ui.values[ 0 ]) + " - " + rupiah(ui.values[ 1 ]));
 					parseURI();
@@ -92,10 +183,15 @@ function rupiah(value)
   return 'Rp ' + x1 + x2;
   }
 
-var ixx = 0;
+var ixx = 1;
+
   function parseURI() {
-  	setTimeout(function(){
+  	ixx=0;
+  }
+
+  	setInterval(function () {
   		if(ixx==0){
+  			$(".sk-cube-grid").css('opacity',1);
 		  	$.ajax({
 		  		url:'{{route('parseURI')}}',
 		  		data:{
@@ -110,17 +206,20 @@ var ixx = 0;
 		  		type:'POST',
 		  		dataType:'json',
 		  		success:function(response) {
+		  			if(response.data>0){
+		  			$("#container").html(response.html);
+		  			}else{
+		  			$("#container").html('<h1>Oops</h1><p>No ads found</p>');
+		  			}
 		  			window.history.pushState({}, '', response.url);
+		  			setTimeout(function() {
+  						$(".sk-cube-grid").css('opacity',0);
+		  			},1000);
 		  		}
 		  	});
 		}
 		ixx++;
-  	},2000);
-
-  	setTimeout(function() {
-  		ixx=0;
-  	},2005);
-  }
+  	},1000);
 
 
   $("#pilar,#city,#make").on('change',function() {
