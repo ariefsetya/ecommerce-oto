@@ -114,5 +114,11 @@ class AjaxController extends Controller {
 		$x->message = $data['pesan'];
 		$x->save();
 	}
+	public function active_chat()
+	{
+		$a = \App\User::find(Auth::user()->id);
+		$a->active_chat = Input::get('active_chat');
+		$a->save();
+	}
 
 }

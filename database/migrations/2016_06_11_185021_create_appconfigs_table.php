@@ -81,6 +81,41 @@ consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ';
 		$x->save();
+		$x = new \App\Appconfig;
+		$x->key = 'panel_title';
+		$x->type = 'page-home';
+		$x->value = 'Who We Are';
+		$x->save();
+		$x = new \App\Appconfig;
+		$x->key = 'panel_description';
+		$x->type = 'page-home';
+		$x->value = 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal letters, as opposed to using Content here.';
+		$x->save();
+		$x = new \App\Appconfig;
+		$x->key = 'contact_us';
+		$x->type = 'page-home';
+		$x->value = 'Contact Us';
+		$x->save();
+		$x = new \App\Appconfig;
+		$x->key = 'contact_hq';
+		$x->type = 'page-home';
+		$x->value = 'Our headquarters';
+		$x->save();
+		$x = new \App\Appconfig;
+		$x->key = 'contact_place';
+		$x->type = 'page-home';
+		$x->value = 'center for financial assistance to deposed nigerian royalty';
+		$x->save();
+		$x = new \App\Appconfig;
+		$x->key = 'contact_phone';
+		$x->type = 'page-home';
+		$x->value = '+0 561 111 235';
+		$x->save();
+		$x = new \App\Appconfig;
+		$x->key = 'contact_email';
+		$x->type = 'page-home';
+		$x->value = 'mail@example.com';
+		$x->save();
 
 	}
 

@@ -8,6 +8,16 @@
 <div class="">
     <div class="container"><a href="{{route('account')}}">Back to Account</a></div>
 </div>
+<div class="post-ad-form" style="padding:0px !important;margin:0px !important;">
+<form>
+<hr>
+<label style="width:9%">Status <span></span></label>
+<select style="margin-bottom:0px" class="" onchange="update_status()" required="" name="active_chat" id="active_chat">
+    <option {{$user->active_chat=="Online"?"selected":""}} value="Online">Online</option>
+    <option {{$user->active_chat=="Offline"?"selected":""}} value="Offline">Offline</option>
+</select>   
+</form>
+</div>
 <div class="wrapper">
     <div class="container">
         <div class="left" style="overflow-y:scroll;overflow-x:hidden;">
@@ -138,6 +148,16 @@ $(window).on('keydown', function(e) {
     return false;
   }
 });
+
+function update_status() {
+    var status = $("#active_chat").val();
+    $.ajax({
+        url:'{{route('active_chat')}}',
+        type:'POST',
+        dataType:'json',
+        data:{active_chat:status,_token:'{{csrf_token()}}'}
+      });
+}
 
 function insertMessage() {
     msg = $('.pesan').val();

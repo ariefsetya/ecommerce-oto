@@ -45,6 +45,9 @@ class GuestController extends Controller {
 		$data['bret'] = \App\Kios::find(\App\Product::find($data['deta']->id)['id_kios'])['name'];
 		$data['brer'] = "store_detail";
 		$data['kios'] = \App\Kios::find($data['deta']->id_kios);
+		$data['user'] = \App\User::find($data['kios']->id_user);
+		$data['img'] = \App\Image::where('id_user',$data['user']->id)->where('code','profile')->where('used_for','profile_picture')->orderBy('id','desc')->first()['image'];
+		$data['img'] = ($data['img']!="")?url('uploads/'.$data['img']):$data['img'];
 		return view('ads.ad')->with($data);
 	}
 	public function ads_download($id)
@@ -343,5 +346,21 @@ class GuestController extends Controller {
 		$hasil = $api->getCURL('starter/cost',$data,'post'); 
 		//tampilkan hasil
 		echo json_encode($hasil);
+	}
+	public function feedback_save()
+	{
+		$data = Input::all();
+
+		$fb = new \App\Feedback;
+		$fb->name = $data['name'];
+		$fb->email = $data['email'];
+		$fb->message = $data['message'];
+		$fb->save();
+
+		return redirect(route('feedback_done'));
+	}
+	public function feedback_done()
+	{
+		return view('feedback_done');
 	}
 }

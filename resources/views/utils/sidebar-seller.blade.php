@@ -24,5 +24,6 @@
 				<li><a href="{{route('store_published')}}">Published Store</a></li>
 			</ol>
 		</li>
+		<li><a href="{{route('account_settings')}}">My Account</a></li>
 	</ol>
 </div>

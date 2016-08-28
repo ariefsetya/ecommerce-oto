@@ -52,6 +52,15 @@ class StoreController extends Controller {
 		$data['setup'] = 0;
 		return view('store/create')->with($data);
 	}
+	public function store_edit($id_)
+	{	
+		$data['num_foto'] = 1;
+		$data['bret'] = "Store";
+		$data['name'] = "Create New Store";
+		$data['brer'] = "store";
+		$data['setup'] = 0;
+		return view('store/create')->with($data);
+	}
 	public function f_save_store()
 	{
 		$st = new \App\Kios;

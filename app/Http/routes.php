@@ -38,6 +38,7 @@ Route::post('ajax/get_product_id',['as'=>'get_product_id','uses'=>'AjaxControlle
 Route::post('ajax/chat_set_data',['as'=>'chat_set_data','uses'=>'AjaxController@chat_set_data']);
 Route::post('ajax/chat_send',['as'=>'chat_send','uses'=>'AjaxController@chat_send']);
 Route::post('ajax/m_chat_send',['as'=>'m_chat_send','uses'=>'AjaxController@m_chat_send']);
+Route::post('ajax/active_chat',['as'=>'active_chat','uses'=>'AjaxController@active_chat']);
 
 Route::get('home', 'WelcomeController@index');
 //pilars
@@ -50,9 +51,12 @@ Route::get('store/detail/{id}', ['as'=>'store_detail','uses'=>'GuestController@s
 
 Route::post('post_search',['as'=>'post_search','uses'=>'GuestController@post_search']);
 Route::post('parseURI',['as'=>'parseURI','uses'=>'GuestController@parseURI']);
+Route::post('feedback_save',['as'=>'feedback_save','uses'=>'GuestController@feedback_save']);
+Route::get('feedback_done',['as'=>'feedback_done','uses'=>'GuestController@feedback_done']);
 
 //account
 Route::get('account/settings', ['as'=>'account_settings','uses'=>'HomeController@account_settings']);
+Route::post('account/update', ['as'=>'account_update','uses'=>'HomeController@account_update']);
 Route::get('account', ['as'=>'account','uses'=>'HomeController@account']);
 Route::get('account/messaging', ['as'=>'messaging','uses'=>'HomeController@messaging']);
 

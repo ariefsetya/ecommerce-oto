@@ -123,47 +123,44 @@
         <div class="container">
           <div class="foo-grids">
             <div class="col-md-3 footer-grid">
-              <h4 class="footer-head">Who We Are</h4>
-              <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-              <p>The point of using Lorem Ipsum is that it has a more-or-less normal letters, as opposed to using 'Content here.</p>
+              <h4 class="footer-head">{{\App\Appconfig::where('key','panel_title')->first()['value']}}</h4>
+              <p>{{\App\Appconfig::where('key','panel_description')->first()['value']}}</p>
+            </div>
+            <div class="col-md-6 footer-grid">
+              <h4 class="footer-head">Feedback</h4>
+              <div class="post-ad-form">
+                <form action="{{route('feedback_save')}}" method="POST">
+                <input type="hidden" value="{{csrf_token()}}" name="_token"></input>
+                  <label>Name <span>*</span></label>
+                  <input name="name" id="name" type="text" required class="phone" placeholder="">
+                  <div class="clearfix"></div>
+                  <label>E-Mail <span>*</span></label>
+                  <input name="email" id="email" type="text" class="" placeholder="">
+                  <div class="clearfix"></div>
+                  <label>Message <span>*</span></label>
+                  <textarea rows="4" data-autoresize name="message" required class="mess" placeholder=""></textarea>
+                  <div class="clearfix"></div>
+                  <button class="btn btn-success pull-right" style="margin-right:50px;" type="submit">Send Feedback</button>
+                </form>
+              </div>
             </div>
             <div class="col-md-3 footer-grid">
-              <h4 class="footer-head">Help</h4>
-              <ul>
-                <li><a href="howitworks.html">How it Works</a></li>
-                <li><a href="sitemap.html">Sitemap</a></li>
-                <li><a href="faq.html">Faq</a></li>
-                <li><a href="feedback.html">Feedback</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="typography.html">Shortcodes</a></li>
-              </ul>
-            </div>
-            <div class="col-md-3 footer-grid">
-              <h4 class="footer-head">Information</h4>
-              <ul>
-                <li><a href="regions.html">Locations Map</a></li>
-                <li><a href="terms.html">Terms of Use</a></li>
-                <li><a href="popular-search.html">Popular searches</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="col-md-3 footer-grid">
-              <h4 class="footer-head">Contact Us</h4>
-              <span class="hq">Our headquarters</span>
+              <h4 class="footer-head">{{\App\Appconfig::where('key','contact_us')->first()['value']}}</h4>
+              <span class="hq">{{\App\Appconfig::where('key','contact_hq')->first()['value']}}</span>
               <address>
                 <ul class="location">
                   <li><span class="glyphicon glyphicon-map-marker"></span></li>
-                  <li>CENTER FOR FINANCIAL ASSISTANCE TO DEPOSED NIGERIAN ROYALTY</li>
+                  <li>{{\App\Appconfig::where('key','contact_place')->first()['value']}}</li>
                   <div class="clearfix"></div>
                 </ul>
                 <ul class="location">
                   <li><span class="glyphicon glyphicon-earphone"></span></li>
-                  <li>+0 561 111 235</li>
+                  <li>{{\App\Appconfig::where('key','contact_pnone')->first()['value']}}</li>
                   <div class="clearfix"></div>
                 </ul>
                 <ul class="location">
                   <li><span class="glyphicon glyphicon-envelope"></span></li>
-                  <li><a href="mailto:info@example.com">mail@example.com</a></li>
+                  <li><a href="mailto:{{\App\Appconfig::where('key','contact_email')->first()['value']}}">{{\App\Appconfig::where('key','contact_email')->first()['value']}}</a></li>
                   <div class="clearfix"></div>
                 </ul>
               </address>

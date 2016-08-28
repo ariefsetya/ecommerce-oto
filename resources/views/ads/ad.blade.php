@@ -69,10 +69,12 @@
 						<span><img src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Download-Computer-512.png" style="width:30px;"> <a target="_blank" href="{{route('ads_download',$deta->slug)}}">Download Catalogue</a></span>
 						<br>
 						<span><img src="http://www.freeiconspng.com/uploads/dentist-rochester-ny--contemporary-dentistry-rochester-ny-24.png" style="width: 30px;"> {{$kios->phone}} @if($kios->accept_wa=="on") - WhatsApp Accepted @endif</span>
+						@if($kios->bbm!="")
 						<br>
 						<span><img src="http://www.freeiconspng.com/uploads/logo-bbm-blackberry-messenger--logodesain-29.png" style="width:30px;"> {{$kios->bbm}}</span>
+						@endif
 						<br>
-						<span><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/5982-200.png" style="width:30px;"> Chat to seller (Now Offline)</span>
+						<span><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/5982-200.png" style="width:30px;"> Chat to seller (Now {{$user->active_chat}})</span>
 					</div>
 					<div class="">
 					@if(Auth::check())
@@ -100,7 +102,7 @@
 						    <h1>{{\App\User::find($kios->id_user)['name']}}</h1>
 						    <h2>{{$kios->name}}</h2>
 						    <figure class="avatar">
-						      <img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" />
+						      <img src="{{$img or url('img-uploader/src/img/icon_add_image2.png')}}" />
 						    </figure>
 						  </div>
 						  <div class="messages">
@@ -140,6 +142,7 @@ var phone = '';
 var uniqid = '';
 var pusher = null;
 var channel = null;
+var img_set = '{{$img or url('img-uploader/src/img/icon_add_image2.png')}}';
 function binding_pusher(uniqid) {
 	pusher = new Pusher('5476ad624b397dfd30f3', {
 	  encrypted: false
@@ -233,7 +236,11 @@ function greetings() {
 	@if(Auth::check())
 	robot_ask('Hai, saya {{\App\User::find($kios->id_user)['name']}}. Ada yang bisa kami bantu?');
 	@else
-	robot_ask('Hai '+nama+', saya {{\App\User::find($kios->id_user)['name']}}. Ada yang bisa kami bantu?');
+  		if('{{\App\User::find($kios->id_user)['active_chat']}}'=='Offline'){
+  			robot_ask('Selamat Datang di BursaOto<br>ini adalah pesan otomatis kami, silakan tinggalkan pesan<br><br>Setelah itu kami akan segera menghubungi Anda melalui telepon atau email :)');
+  		}else{
+  			robot_ask('Selamat Datang di BursaOto<br>Ada yang bisa kami bantu?');
+  		}
 	@endif
 }
 function askname() {
@@ -248,12 +255,12 @@ function askemail() {
 	robot_ask('Hai '+nama+', saya {{\App\User::find($kios->id_user)['name']}}. Silakan tulis email Anda...');
 }
 function robot_ask(msg) {
-	  $('<div class="message loading new"><figure class="avatar"><img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" /></figure><span></span></div>').appendTo($('.mCSB_container'));
+	  $('<div class="message loading new"><figure class="avatar"><img src="'+img_set+'" /></figure><span></span></div>').appendTo($('.mCSB_container'));
 	  updateScrollbar();
 
 	  setTimeout(function() {
 	    $('.message.loading').remove();
-	    $('<div class="message new"><figure class="avatar"><img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" /></figure>'+msg+'</div>').appendTo($('.mCSB_container')).addClass('new');
+	    $('<div class="message new"><figure class="avatar"><img src="'+img_set+'" /></figure>'+msg+'</div>').appendTo($('.mCSB_container')).addClass('new');
 		setDate();
 		updateScrollbar();
 	  }, 1000);

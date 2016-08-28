@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
 use Auth;
+
+use Illuminate\Support\Facades\Input;
 class HomeController extends Controller {
 
 	/*
@@ -38,10 +40,42 @@ class HomeController extends Controller {
 		
 		return view('account/home')->with($data);
 	}
+	public function account_settings()
+	{		
+		$data['bret'] = "Account";
+		$data['name'] = "Settings";
+		$data['brer'] = "account";
+		$data['user'] = \App\User::find(Auth::user()->id);
+		$data['img'] = \App\Image::where('id_user',$data['user']->id)->where('code','profile')->where('used_for','profile_picture')->orderBy('id','desc')->first()['image'];
+		$data['img'] = ($data['img']!="")?url('uploads/'.$data['img']):$data['img'];
+		return view('account.settings')->with($data);
+	}
+	public function account_update()
+	{
+		$data = Input::all();
+
+		$im = new \App\Image;
+		$im->used_for = "profile_picture";
+		$im->code = "profile";
+		$im->image_type = "url";
+		$im->image = $data['image_name'];
+		$im->id_user = Auth::user()->id;
+		$im->save();
+
+		$a = \App\User::find(Auth::user()->id);
+		$a->name = $data['name'];
+		$a->email = $data['email'];
+		$a->phone = $data['phone'];
+		$a->active_chat = $data['active_chat'];
+		$a->save();
+
+		return redirect(route('account'));
+	}
 
 	public function messaging()
 	{
-		return view('messaging.message');
+		$data['user'] = \App\User::find(Auth::user()->id);
+		return view('messaging.message')->with($data);
 	}
 
 }

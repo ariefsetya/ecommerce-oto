@@ -21,9 +21,6 @@
 						   <input type="password" name="password" class="lock" placeholder="password">
 						</div>
 					</div>
-					<div class="signin-rit text-right">
-						Forgot Password? <a href="#">Click Here</a>
-					</div>
 					<hr>
 					<input type="submit" value="Log in">
 				<div class="new_people">
