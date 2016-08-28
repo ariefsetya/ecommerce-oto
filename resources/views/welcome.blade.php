@@ -155,7 +155,7 @@
                 </ul>
                 <ul class="location">
                   <li><span class="glyphicon glyphicon-earphone"></span></li>
-                  <li>{{\App\Appconfig::where('key','contact_pnone')->first()['value']}}</li>
+                  <li>{{\App\Appconfig::where('key','contact_phone')->first()['value']}}</li>
                   <div class="clearfix"></div>
                 </ul>
                 <ul class="location">
