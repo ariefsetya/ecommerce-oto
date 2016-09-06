@@ -47,7 +47,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   </div>
     @yield('body')
     <footer>
-      @yield('footer')
       <!-- js -->
       <script async type="text/javascript" src="{{url('assets/js/jquery.min.js')}}"></script>
       <!-- js -->
@@ -114,6 +113,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           event.preventDefault();
         }
       </script>
+      
+      @yield('footer')
       <div class="footer-bottom text-center">
         <div class="container">
           <div class="footer-logo">
