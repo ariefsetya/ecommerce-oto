@@ -84,7 +84,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       <script async src="{{url('assets/js/jquery.uls.languagefilter.js')}}"></script>
       <script async src="{{url('assets/js/jquery.uls.regionfilter.js')}}"></script>
       <script async src="{{url('assets/js/jquery.uls.core.js')}}"></script>
-      <script>
+      <script async>
         $( document ).ready( function() {
           $( '.uls-trigger' ).uls( {
             onSelect : function( language ) {
