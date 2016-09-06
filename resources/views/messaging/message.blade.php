@@ -60,9 +60,9 @@
 @endsection
 
 @section('footer')
-<script src="https://js.pusher.com/3.2/pusher.min.js"></script>
+<script async src="https://js.pusher.com/3.2/pusher.min.js"></script>
     
-<script type="text/javascript">
+<script async type="text/javascript">
 
 var uniqid = '';
 function set_uniq(uniq) {

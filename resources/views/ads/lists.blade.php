@@ -49,7 +49,7 @@
 @endsection
 
 @section('footer')
-	<script type='text/javascript'>
+	<script async type='text/javascript'>
 	$(window).load(function(){
 	 $( "#slider-range" ).slider({
 				range: true,

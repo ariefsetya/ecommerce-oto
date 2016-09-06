@@ -128,10 +128,10 @@
 
 @section('footer')  
 
-	<script src="https://js.pusher.com/3.2/pusher.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js"></script>
-	<script defer src="{{url('assets/js/jquery.flexslider.js')}}"></script>
-	<script>
+	<script async src="https://js.pusher.com/3.2/pusher.min.js"></script>
+	<script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script async defer src="{{url('assets/js/jquery.flexslider.js')}}"></script>
+	<script async>
 	var $messages = $('.messages-content'),
     d, h, m,
     i = 0;

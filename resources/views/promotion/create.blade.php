@@ -86,7 +86,7 @@
 @endsection
 
 @section('footer')
-	<script type="text/javascript">
+	<script async type="text/javascript">
 	$('.price').priceFormat({
 	    prefix: 'Rp',
 	    centsSeparator: ',',

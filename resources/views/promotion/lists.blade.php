@@ -49,7 +49,7 @@
 @endsection
 
 @section('footer')
-	<script type='text/javascript'>//<![CDATA[ 
+	<script async type='text/javascript'>//<![CDATA[ 
 	$(window).load(function(){
 	 $( "#slider-range" ).slider({
 				range: true,

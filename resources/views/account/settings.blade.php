@@ -58,8 +58,8 @@
 @endsection
 
 @section('footer')	
-<script src="{{url('img-uploader/src/jquery.picture.cut.js')}}"></script>
-<script type="text/javascript">
+<script async src="{{url('img-uploader/src/jquery.picture.cut.js')}}"></script>
+<script async type="text/javascript">
 fetch_img(1);
 	function fetch_img(id) {
 		$("#container_image_"+id).PictureCut({
