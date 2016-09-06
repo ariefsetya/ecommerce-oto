@@ -55,26 +55,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
       <script async src="{{url('assets/js/bootstrap.min.js')}}"></script>
       <script async src="{{url('assets/js/bootstrap-select.js')}}"></script>
-      <script async>
-        $(document).ready(function () {
-          var mySelect = $('#first-disabled2');
-
-          $('#special').on('click', function () {
-            mySelect.find('option:selected').prop('disabled', true);
-            mySelect.selectpicker('refresh');
-          });
-
-          $('#special2').on('click', function () {
-            mySelect.find('option:disabled').prop('disabled', false);
-            mySelect.selectpicker('refresh');
-          });
-
-          $('#basic2').selectpicker({
-            liveSearch: true,
-            maxOptions: 1
-          });
-        });
-      </script>     
       <script async type="text/javascript" src="{{url('assets/js/jquery-ui.js')}}"></script>              
       <script async type="text/javascript" src="{{url('assets/js/jquery.price.format.js')}}"></script>              
       <script async type="text/javascript" src="{{url('assets/js/jquery.leanModal.min.js')}}"></script>
@@ -84,18 +64,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       <script async src="{{url('assets/js/jquery.uls.languagefilter.js')}}"></script>
       <script async src="{{url('assets/js/jquery.uls.regionfilter.js')}}"></script>
       <script async src="{{url('assets/js/jquery.uls.core.js')}}"></script>
-      <script async>
-        $( document ).ready( function() {
-          $( '.uls-trigger' ).uls( {
-            onSelect : function( language ) {
-              var languageName = $.uls.data.getAutonym( language );
-              $( '.uls-trigger' ).text( languageName );
-            },
-            quickList: ['en', 'hi', 'he', 'ml', 'ta', 'fr'] //FIXME
-          } );
-        } );
-      </script>
-      <script type="text/javascript">
+      <script async type="text/javascript">
         
         jQuery.each(jQuery('textarea[data-autoresize]'), function() {
             var offset = this.offsetHeight - this.clientHeight;
